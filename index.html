@@ -1,3 +1,4 @@
+```html
 <!doctype html>
 <html lang="hy">
 <head>
@@ -112,11 +113,7 @@ button{cursor:pointer}
   gap:15px;
 }
 
-.title{
-  font-size:28px;
-  font-weight:900;
-}
-
+.title{font-size:28px;font-weight:900}
 .muted{color:var(--m)}
 
 .topbtn,.btn{
@@ -134,9 +131,7 @@ button{cursor:pointer}
   font-weight:850;
 }
 
-.btn:hover,.topbtn:hover{
-  transform:translateY(-1px);
-}
+.btn:hover,.topbtn:hover{transform:translateY(-1px)}
 
 .btn:disabled,.topbtn:disabled{
   opacity:.55;
@@ -144,13 +139,8 @@ button{cursor:pointer}
   transform:none;
 }
 
-.greenbtn{
-  background:var(--g);
-  color:#07140e;
-}
-
+.greenbtn{background:var(--g);color:#07140e}
 .redbtn{background:var(--r)}
-.blue{background:var(--b)}
 .purple{background:var(--v);color:#100b1b}
 
 .card{
@@ -379,30 +369,6 @@ td{
   font-weight:900;
 }
 
-.modal{
-  position:fixed;
-  inset:0;
-  background:#000b;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  z-index:100;
-}
-
-.modal.show{display:flex}
-
-.box{
-  max-width:620px;
-  width:100%;
-  max-height:90vh;
-  overflow:auto;
-  background:#121925;
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:21px;
-}
-
 .toast{
   position:fixed;
   right:20px;
@@ -423,14 +389,14 @@ td{
   opacity:1;
 }
 
-.auth{
+.auth,.setup{
   min-height:100vh;
   display:grid;
   place-items:center;
   padding:20px;
 }
 
-.authbox{
+.authbox,.setupbox{
   width:min(470px,100%);
   background:linear-gradient(145deg,#141b27,#10151e);
   border:1px solid var(--line);
@@ -438,22 +404,9 @@ td{
   padding:25px;
 }
 
-.authbox .logo{padding-left:0}
+.setupbox{width:min(620px,100%)}
 
-.setup{
-  min-height:100vh;
-  display:grid;
-  place-items:center;
-  padding:20px;
-}
-
-.setupbox{
-  width:min(620px,100%);
-  background:linear-gradient(145deg,#141b27,#10151e);
-  border:1px solid var(--line);
-  border-radius:20px;
-  padding:25px;
-}
+.authbox .logo,.setupbox .logo{padding-left:0}
 
 .avatarupload{
   display:flex;
@@ -476,6 +429,14 @@ td{
 hr{
   border:0;
   border-top:1px solid var(--line);
+}
+
+.linkbtn{
+  background:none;
+  border:0;
+  color:#7fa5ff;
+  padding:8px 0;
+  text-decoration:underline;
 }
 
 @media(max-width:1000px){
@@ -503,6 +464,7 @@ hr{
 <body>
 
 <!-- AUTH -->
+
 <div id="auth" class="auth">
   <div class="authbox">
 
@@ -514,47 +476,131 @@ hr{
       Մուտք գործիր քո հաշիվ
     </p>
 
-    <div id="signupFields" class="hidden">
+    <!-- LOGIN / SIGNUP -->
 
-      <div class="field">
-        <label>Անուն Ազգանուն</label>
-        <input id="authName" class="input"
-               placeholder="Օրինակ՝ Գեղամ Սարգսյան">
+    <div id="normalAuth">
+
+      <div id="signupFields" class="hidden">
+
+        <div class="field">
+          <label>Անուն Ազգանուն</label>
+          <input id="authName" class="input"
+                 placeholder="Օրինակ՝ Գեղամ Սարգսյան">
+        </div>
+
+        <div class="field">
+          <label>Username</label>
+          <input id="authUsername" class="input"
+                 placeholder="Օրինակ՝ gegham08">
+        </div>
+
       </div>
 
       <div class="field">
-        <label>Username</label>
-        <input id="authUsername" class="input"
-               placeholder="Օրինակ՝ gegham08">
+        <label>Email</label>
+        <input id="authEmail"
+               type="email"
+               class="input"
+               placeholder="Email">
       </div>
 
+      <div class="field">
+        <label>Գաղտնաբառ</label>
+        <input id="authPassword"
+               type="password"
+               class="input"
+               placeholder="Գաղտնաբառ">
+      </div>
+
+      <button class="btn"
+              style="width:100%"
+              onclick="submitAuth()"
+              id="authSubmit">
+        Մուտք գործել
+      </button>
+
+      <button class="linkbtn"
+              style="width:100%"
+              onclick="showForgotPassword()">
+        Մոռացել եմ գաղտնաբառը
+      </button>
+
+      <button class="topbtn"
+              style="width:100%;margin-top:5px"
+              onclick="toggleAuth()"
+              id="authToggle">
+        Նոր հաշիվ ստեղծել
+      </button>
+
     </div>
 
-    <div class="field">
-      <label>Email</label>
-      <input id="authEmail" type="email"
-             class="input" placeholder="Email">
+
+    <!-- FORGOT PASSWORD -->
+
+    <div id="forgotAuth" class="hidden">
+
+      <p class="muted">
+        Գրիր քո email-ը։ Մենք կուղարկենք հղում
+        գաղտնաբառը վերականգնելու համար։
+      </p>
+
+      <div class="field">
+        <label>Email</label>
+        <input id="forgotEmail"
+               type="email"
+               class="input"
+               placeholder="Email">
+      </div>
+
+      <button class="btn"
+              style="width:100%"
+              onclick="sendResetEmail()"
+              id="forgotSubmit">
+        Ուղարկել հղումը
+      </button>
+
+      <button class="topbtn"
+              style="width:100%;margin-top:8px"
+              onclick="showLogin()">
+        ← Վերադառնալ մուտքին
+      </button>
+
     </div>
 
-    <div class="field">
-      <label>Գաղտնաբառ</label>
-      <input id="authPassword" type="password"
-             class="input" placeholder="Գաղտնաբառ">
+
+    <!-- NEW PASSWORD -->
+
+    <div id="newPasswordAuth" class="hidden">
+
+      <p class="muted">
+        Գրիր քո նոր գաղտնաբառը։
+      </p>
+
+      <div class="field">
+        <label>Նոր գաղտնաբառ</label>
+        <input id="newPassword"
+               type="password"
+               class="input"
+               placeholder="Նոր գաղտնաբառ">
+      </div>
+
+      <div class="field">
+        <label>Կրկնել գաղտնաբառը</label>
+        <input id="newPassword2"
+               type="password"
+               class="input"
+               placeholder="Կրկնել գաղտնաբառը">
+      </div>
+
+      <button class="btn"
+              style="width:100%"
+              onclick="updatePassword()"
+              id="newPasswordSubmit">
+        Պահպանել նոր գաղտնաբառը
+      </button>
+
     </div>
 
-    <button class="btn"
-            style="width:100%"
-            onclick="submitAuth()"
-            id="authSubmit">
-      Մուտք գործել
-    </button>
-
-    <button class="topbtn"
-            style="width:100%;margin-top:8px"
-            onclick="toggleAuth()"
-            id="authToggle">
-      Նոր հաշիվ ստեղծել
-    </button>
 
     <div class="muted"
          style="margin-top:12px;font-size:12px">
@@ -564,7 +610,9 @@ hr{
   </div>
 </div>
 
+
 <!-- PROFILE SETUP -->
+
 <div id="setup" class="setup hidden">
 
   <div class="setupbox">
@@ -574,7 +622,8 @@ hr{
     <h2>Կարգավորիր քո պրոֆիլը</h2>
 
     <p class="muted">
-      Ընտրիր անունդ, username-ը և ավելացրու ավատար։
+      Առաջին մուտքից առաջ ընտրիր անունդ,
+      username-ը և ավելացրու ավատար։
     </p>
 
     <div class="formgrid">
@@ -628,7 +677,9 @@ hr{
   </div>
 </div>
 
+
 <!-- APP -->
+
 <div id="app" class="app hidden">
 
   <aside class="side">
@@ -713,27 +764,29 @@ hr{
 
   </aside>
 
+
   <main class="main">
 
     <div class="top">
 
       <div>
-
         <div class="muted" id="dateText"></div>
 
         <div class="title" id="pageTitle">
           Քո մրցահարթակը 🔥
         </div>
-
       </div>
 
-      <button class="topbtn" onclick="loadAll()">
+      <button class="topbtn"
+              onclick="loadAll()">
         ↻ Թարմացնել
       </button>
 
     </div>
 
+
     <!-- HOME -->
+
     <section id="page-home">
 
       <div class="grid">
@@ -760,17 +813,23 @@ hr{
             0 XP
           </b>
 
-          <span class="muted" id="myLevel">
+          <span class="muted"
+                id="myLevel">
             · Մակարդակ 1
           </span>
 
         </div>
 
+
         <div class="card">
 
-          <div class="muted">👋 Բարի գալուստ</div>
+          <div class="muted">
+            👋 Բարի գալուստ
+          </div>
 
-          <h2 id="welcomeName">Օգտատեր</h2>
+          <h2 id="welcomeName">
+            Օգտատեր
+          </h2>
 
           <div class="stats">
 
@@ -794,6 +853,7 @@ hr{
         </div>
 
       </div>
+
 
       <section class="section card">
 
@@ -827,7 +887,9 @@ hr{
 
     </section>
 
+
     <!-- LEADERBOARD -->
+
     <section id="page-leaderboard"
              class="hidden card">
 
@@ -843,7 +905,9 @@ hr{
 
     </section>
 
+
     <!-- EXERCISES -->
+
     <section id="page-exercises"
              class="hidden">
 
@@ -858,11 +922,14 @@ hr{
       </div>
 
       <div class="ex section"
-           id="exerciseList"></div>
+           id="exerciseList">
+      </div>
 
     </section>
 
+
     <!-- PEOPLE -->
+
     <section id="page-people"
              class="hidden">
 
@@ -871,13 +938,16 @@ hr{
         <h2>👥 Մասնակիցներ</h2>
 
         <div class="people"
-             id="peopleList"></div>
+             id="peopleList">
+        </div>
 
       </div>
 
     </section>
 
+
     <!-- TRAINER -->
+
     <section id="page-trainer"
              class="hidden">
 
@@ -895,7 +965,7 @@ hr{
 
         <div class="card">
 
-          <h3>👥 Աշակերտներ</h3>
+          <h3>👥 Իմ աշակերտները</h3>
 
           <div id="trainerStudents"></div>
 
@@ -906,34 +976,25 @@ hr{
           <h3>🔔 Ուղարկել ծանուցում</h3>
 
           <div class="field">
-
             <label>Ում</label>
-
             <select id="trainerRecipient"
                     class="select">
             </select>
-
           </div>
 
           <div class="field">
-
             <label>Վերնագիր</label>
-
             <input id="trainerNotificationTitle"
                    class="input"
                    placeholder="Օրինակ՝ Այսօրվա մարզում">
-
           </div>
 
           <div class="field">
-
             <label>Հաղորդագրություն</label>
-
             <textarea id="trainerNotificationMessage"
                       class="textarea"
                       placeholder="Գրիր հաղորդագրությունը...">
             </textarea>
-
           </div>
 
           <button class="btn"
@@ -947,7 +1008,9 @@ hr{
 
     </section>
 
+
     <!-- ADMIN -->
+
     <section id="page-admin"
              class="hidden">
 
@@ -970,34 +1033,25 @@ hr{
           <h3>🔔 Ծանուցում</h3>
 
           <div class="field">
-
             <label>Ում</label>
-
             <select id="adminRecipient"
                     class="select">
             </select>
-
           </div>
 
           <div class="field">
-
             <label>Վերնագիր</label>
-
             <input id="adminNotificationTitle"
                    class="input"
                    placeholder="Վերնագիր">
-
           </div>
 
           <div class="field">
-
             <label>Հաղորդագրություն</label>
-
             <textarea id="adminNotificationMessage"
                       class="textarea"
                       placeholder="Հաղորդագրություն...">
             </textarea>
-
           </div>
 
           <button class="btn"
@@ -1019,7 +1073,9 @@ hr{
 
     </section>
 
+
     <!-- NOTIFICATIONS -->
+
     <section id="page-notifications"
              class="hidden card">
 
@@ -1046,7 +1102,9 @@ hr{
 
     </section>
 
+
     <!-- PROFILE -->
+
     <section id="page-profile"
              class="hidden card">
 
@@ -1162,47 +1220,38 @@ hr{
     </section>
 
   </main>
+
 </div>
 
-<div class="toast" id="toast"></div>
+
+<div class="toast"
+     id="toast">
+</div>
+
 
 <script>
-/* =========================================================
-   SUPABASE
-   ========================================================= */
 
 const SUPABASE_URL =
-  "https://ohkxdcioxbssrnqaljxk.supabase.co";
+"https://ohkxdcioxbssrnqaljxk.supabase.co";
 
 const SUPABASE_KEY =
-  "sb_publishable__EWGkXyiUCI5Zy9ptxIk6Q_dXAADt9q";
+"sb_publishable__EWGkXyiUCI5Zy9ptxIk6Q_dXAADt9q";
 
 const db =
-  supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 
-
-/* =========================================================
-   STATE
-   ========================================================= */
 
 let session = null;
 let currentUser = null;
 let currentProfile = null;
-
 let profiles = [];
 let exercises = [];
 let notifications = [];
-
 let authMode = "login";
-let loading = false;
 
-
-/* =========================================================
-   CONSTANTS
-   ========================================================= */
 
 const roleNames = {
   student:"Աշակերտ",
@@ -1211,20 +1260,21 @@ const roleNames = {
 };
 
 
-/* =========================================================
-   BASIC HELPERS
-   ========================================================= */
-
-function $(id){
-  return document.getElementById(id);
-}
+document.getElementById("dateText").textContent =
+new Intl.DateTimeFormat(
+  "hy-AM",
+  {
+    weekday:"long",
+    day:"numeric",
+    month:"long"
+  }
+).format(new Date());
 
 
 function toast(text){
 
-  const el = $("toast");
-
-  if(!el) return;
+  const el =
+  document.getElementById("toast");
 
   el.textContent = text;
   el.classList.add("show");
@@ -1232,9 +1282,13 @@ function toast(text){
   clearTimeout(window.__toastTimer);
 
   window.__toastTimer =
-    setTimeout(()=>{
+  setTimeout(
+    ()=>{
       el.classList.remove("show");
-    },3000);
+    },
+    3500
+  );
+
 }
 
 
@@ -1251,6 +1305,7 @@ function esc(value){
         "'":"&#039;"
       }[char])
     );
+
 }
 
 
@@ -1270,26 +1325,18 @@ function isAdmin(){
 
 
 function initialOf(name){
-  return (name || "Գ")
-    .trim()
-    .charAt(0)
-    .toUpperCase();
+  return (name || "Գ").trim().charAt(0).toUpperCase();
 }
 
 
 function avatarHTML(profile,size=""){
 
-  const initial =
-    esc(initialOf(profile?.full_name));
-
   if(profile?.avatar_url){
 
     return `
       <div class="avatar ${size}">
-        <img
-          src="${esc(profile.avatar_url)}"
-          alt="avatar"
-        >
+        <img src="${esc(profile.avatar_url)}"
+             alt="avatar">
       </div>
     `;
 
@@ -1297,88 +1344,155 @@ function avatarHTML(profile,size=""){
 
   return `
     <div class="avatar ${size}">
-      ${initial}
+      ${esc(initialOf(profile?.full_name))}
     </div>
   `;
+
 }
 
 
-function setImageAvatar(element,url,name){
+/* =========================
+   AUTH UI
+========================= */
 
-  if(!element) return;
+function showLogin(){
 
-  if(url){
+  authMode = "login";
 
-    element.innerHTML =
-      `<img src="${esc(url)}" alt="avatar">`;
+  document
+    .getElementById("normalAuth")
+    .classList
+    .remove("hidden");
 
-  }else{
+  document
+    .getElementById("forgotAuth")
+    .classList
+    .add("hidden");
 
-    element.textContent =
-      initialOf(name);
+  document
+    .getElementById("newPasswordAuth")
+    .classList
+    .add("hidden");
 
-  }
+  document
+    .getElementById("authTitle")
+    .textContent = "Մուտք";
+
+  document
+    .getElementById("authText")
+    .textContent =
+    "Մուտք գործիր քո հաշիվ";
+
 }
 
-
-/* =========================================================
-   AUTH MODE
-   ========================================================= */
 
 function toggleAuth(){
 
-  authMode =
-    authMode === "login"
-      ? "signup"
-      : "login";
+  if(authMode === "login"){
 
-  $("authTitle").textContent =
-    authMode === "login"
-      ? "Մուտք"
-      : "Գրանցում";
+    authMode = "signup";
 
-  $("authText").textContent =
-    authMode === "login"
-      ? "Մուտք գործիր քո հաշիվ"
-      : "Ստեղծիր նոր հաշիվ";
+    document
+      .getElementById("authTitle")
+      .textContent = "Գրանցում";
 
-  $("signupFields")
-    .classList
-    .toggle(
-      "hidden",
-      authMode === "login"
-    );
+    document
+      .getElementById("authText")
+      .textContent =
+      "Ստեղծիր նոր հաշիվ";
 
-  $("authSubmit").textContent =
-    authMode === "login"
-      ? "Մուտք գործել"
-      : "Գրանցվել";
+    document
+      .getElementById("signupFields")
+      .classList
+      .remove("hidden");
 
-  $("authToggle").textContent =
-    authMode === "login"
-      ? "Նոր հաշիվ ստեղծել"
-      : "Արդեն ունեմ հաշիվ";
+    document
+      .getElementById("authSubmit")
+      .textContent =
+      "Գրանցվել";
+
+    document
+      .getElementById("authToggle")
+      .textContent =
+      "Արդեն ունեմ հաշիվ";
+
+  }else{
+
+    showLogin();
+
+    document
+      .getElementById("signupFields")
+      .classList
+      .add("hidden");
+
+    document
+      .getElementById("authSubmit")
+      .textContent =
+      "Մուտք գործել";
+
+    document
+      .getElementById("authToggle")
+      .textContent =
+      "Նոր հաշիվ ստեղծել";
+
+  }
 
 }
 
 
-/* =========================================================
-   AUTH
-   ========================================================= */
+function showForgotPassword(){
+
+  document
+    .getElementById("normalAuth")
+    .classList
+    .add("hidden");
+
+  document
+    .getElementById("forgotAuth")
+    .classList
+    .remove("hidden");
+
+  document
+    .getElementById("newPasswordAuth")
+    .classList
+    .add("hidden");
+
+  document
+    .getElementById("authTitle")
+    .textContent =
+    "Վերականգնել գաղտնաբառը";
+
+  document
+    .getElementById("authText")
+    .textContent =
+    "Մուտքագրիր քո email-ը";
+
+}
+
 
 async function submitAuth(){
 
   const email =
-    $("authEmail").value.trim();
+    document
+      .getElementById("authEmail")
+      .value
+      .trim();
 
   const password =
-    $("authPassword").value;
+    document
+      .getElementById("authPassword")
+      .value;
 
   const name =
-    $("authName").value.trim();
+    document
+      .getElementById("authName")
+      .value
+      .trim();
 
   const username =
-    $("authUsername").value
+    document
+      .getElementById("authUsername")
+      .value
       .trim()
       .toLowerCase();
 
@@ -1387,13 +1501,7 @@ async function submitAuth(){
 
     toast("Լրացրու email-ը և գաղտնաբառը");
     return;
-  }
 
-
-  if(password.length < 6){
-
-    toast("Գաղտնաբառը պետք է լինի առնվազն 6 նիշ");
-    return;
   }
 
 
@@ -1403,25 +1511,34 @@ async function submitAuth(){
 
       toast("Լրացրու անունը և username-ը");
       return;
+
     }
 
-    if(!/^[a-z0-9_.-]{3,30}$/.test(username)){
+    if(
+      !/^[a-z0-9_.-]{3,30}$/.test(username)
+    ){
 
       toast(
         "Username-ը պետք է լինի 3-30 նիշ՝ a-z, 0-9, _, . կամ -"
       );
 
       return;
+
     }
 
   }
 
 
-  const btn = $("authSubmit");
+  const btn =
+    document.getElementById("authSubmit");
 
   btn.disabled = true;
 
+
   try{
+
+    let result;
+
 
     if(authMode === "signup"){
 
@@ -1433,14 +1550,8 @@ async function submitAuth(){
           .maybeSingle();
 
 
-      if(existing.error){
-
-        console.warn(
-          "Username check:",
-          existing.error
-        );
-
-      }
+      if(existing.error)
+        throw existing.error;
 
 
       if(existing.data){
@@ -1452,58 +1563,64 @@ async function submitAuth(){
       }
 
 
-      const result =
+      result =
         await db.auth.signUp({
+
           email,
           password,
+
           options:{
             data:{
               full_name:name,
-              username:username
+              username
             }
           }
+
         });
 
 
-      if(result.error)
-        throw result.error;
-
-
-      if(!result.data.session){
-
-        toast(
-          "Գրանցումը կատարված է։ Ստուգիր email-ը, հետո մուտք գործիր։"
-        );
-
-        return;
-      }
-
-
-      toast("Գրանցումը հաջողվեց");
-
     }else{
 
-      const result =
+      result =
         await db.auth.signInWithPassword({
           email,
           password
         });
 
-
-      if(result.error)
-        throw result.error;
+    }
 
 
-      toast("Մուտքը հաջողվեց");
+    if(result.error)
+      throw result.error;
+
+
+    if(
+      authMode === "signup" &&
+      !result.data.session
+    ){
+
+      toast(
+        "Գրանցումը հաջողվեց։ Ստուգիր email-ը։"
+      );
+
+      return;
 
     }
+
+
+    toast(
+      authMode === "login"
+        ? "Մուտքը հաջողվեց"
+        : "Գրանցումը հաջողվեց"
+    );
+
 
   }catch(error){
 
     console.error(error);
 
     toast(
-      error?.message ||
+      error.message ||
       "Գործողությունը չհաջողվեց"
     );
 
@@ -1516,84 +1633,268 @@ async function submitAuth(){
 }
 
 
-/* =========================================================
+/* =========================
+   PASSWORD RESET
+========================= */
+
+async function sendResetEmail(){
+
+  const email =
+    document
+      .getElementById("forgotEmail")
+      .value
+      .trim();
+
+
+  if(!email){
+
+    toast("Գրիր email-ը");
+    return;
+
+  }
+
+
+  const btn =
+    document.getElementById("forgotSubmit");
+
+  btn.disabled = true;
+
+
+  try{
+
+    /*
+      GitHub Pages-ի իրական հասցեն ավտոմատ
+      վերցվում է հենց ընթացիկ էջից։
+    */
+
+    const redirectTo =
+      window.location.origin +
+      window.location.pathname;
+
+
+    const {
+      error
+    } =
+    await db.auth.resetPasswordForEmail(
+      email,
+      {
+        redirectTo
+      }
+    );
+
+
+    if(error)
+      throw error;
+
+
+    toast(
+      "✅ Հղումը ուղարկվեց email-ին։"
+    );
+
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      error.message ||
+      "Չհաջողվեց ուղարկել հղումը"
+    );
+
+  }finally{
+
+    btn.disabled = false;
+
+  }
+
+}
+
+
+async function updatePassword(){
+
+  const password =
+    document
+      .getElementById("newPassword")
+      .value;
+
+  const password2 =
+    document
+      .getElementById("newPassword2")
+      .value;
+
+
+  if(password.length < 6){
+
+    toast(
+      "Նոր գաղտնաբառը պետք է լինի առնվազն 6 նիշ"
+    );
+
+    return;
+
+  }
+
+
+  if(password !== password2){
+
+    toast("Գաղտնաբառերը չեն համընկնում");
+    return;
+
+  }
+
+
+  const btn =
+    document.getElementById(
+      "newPasswordSubmit"
+    );
+
+  btn.disabled = true;
+
+
+  try{
+
+    const {
+      error
+    } =
+    await db.auth.updateUser({
+      password
+    });
+
+
+    if(error)
+      throw error;
+
+
+    toast(
+      "✅ Գաղտնաբառը փոխվեց։"
+    );
+
+
+    setTimeout(
+      async()=>{
+
+        await db.auth.signOut();
+
+        showLogin();
+
+      },
+      1500
+    );
+
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      error.message ||
+      "Չհաջողվեց փոխել գաղտնաբառը"
+    );
+
+  }finally{
+
+    btn.disabled = false;
+
+  }
+
+}
+
+
+/* =========================
    LOGOUT
-   ========================================================= */
+========================= */
 
 async function logout(){
 
-  try{
-    await db.auth.signOut();
-  }catch(error){
-    console.error(error);
-  }
+  await db.auth.signOut();
 
   session = null;
   currentUser = null;
   currentProfile = null;
 
-  $("app").classList.add("hidden");
-  $("setup").classList.add("hidden");
-  $("auth").classList.remove("hidden");
+  document
+    .getElementById("app")
+    .classList
+    .add("hidden");
+
+  document
+    .getElementById("setup")
+    .classList
+    .add("hidden");
+
+  document
+    .getElementById("auth")
+    .classList
+    .remove("hidden");
+
+  showLogin();
+
 }
 
 
-/* =========================================================
+/* =========================
    PROFILE
-   ========================================================= */
+========================= */
 
 async function loadProfile(){
 
-  if(!currentUser)
-    return false;
+  const {
+    data,
+    error
+  } =
+  await db
+    .from("profiles")
+    .select(
+      "id,full_name,role,xp,level,avatar_url,created_at,updated_at,username,email"
+    )
+    .eq("id",currentUser.id)
+    .maybeSingle();
 
 
-  const result =
-    await db
-      .from("profiles")
-      .select(
-        "id,full_name,role,xp,level,avatar_url,created_at,updated_at,username,email"
-      )
-      .eq("id",currentUser.id)
-      .maybeSingle();
+  if(error)
+    throw error;
 
 
-  if(result.error)
-    throw result.error;
+  currentProfile = data;
 
 
-  currentProfile =
-    result.data;
+  if(!data){
 
+    throw new Error(
+      "Քո profile-ը չի գտնվել։"
+    );
 
-  if(!currentProfile){
-
-    openProfileSetup();
-
-    return false;
   }
 
 
   const needsSetup =
-    !currentProfile.full_name ||
-    !currentProfile.username ||
-    !currentProfile.avatar_url;
+    !data.full_name ||
+    !data.username ||
+    !data.avatar_url;
 
 
   if(needsSetup){
 
     openProfileSetup();
-
     return false;
+
   }
 
 
-  $("setup").classList.add("hidden");
-  $("app").classList.remove("hidden");
+  document
+    .getElementById("setup")
+    .classList
+    .add("hidden");
+
+  document
+    .getElementById("app")
+    .classList
+    .remove("hidden");
+
 
   updateUserUI();
 
   return true;
+
 }
 
 
@@ -1601,114 +1902,159 @@ function updateUserUI(){
 
   const p = currentProfile;
 
-  $("roleName").textContent =
+
+  document.getElementById("roleName")
+    .textContent =
     roleLabel(p.role);
 
-  $("sideName").textContent =
+  document.getElementById("sideName")
+    .textContent =
     p.full_name;
 
-  $("sideUsername").textContent =
+  document.getElementById("sideUsername")
+    .textContent =
     "@" + p.username;
 
-  $("welcomeName").textContent =
+  document.getElementById("welcomeName")
+    .textContent =
     p.full_name;
 
-  $("profileName").textContent =
+  document.getElementById("profileName")
+    .textContent =
     p.full_name;
 
-  $("profileUsername").textContent =
+  document.getElementById("profileUsername")
+    .textContent =
     "@" + p.username;
 
-  $("profileRole").textContent =
+  document.getElementById("profileRole")
+    .textContent =
     roleLabel(p.role);
 
-  $("profileRole2").textContent =
+  document.getElementById("profileRole2")
+    .textContent =
     p.role;
 
-  $("profileEmail").textContent =
-    currentUser?.email ||
-    p.email ||
-    "";
+  document.getElementById("profileEmail")
+    .textContent =
+    currentUser.email || p.email || "";
 
-  $("profileXP").textContent =
+  document.getElementById("profileXP")
+    .textContent =
     Number(p.xp || 0).toLocaleString();
 
-  $("profileLevel").textContent =
+  document.getElementById("profileLevel")
+    .textContent =
     p.level || 1;
 
 
-  setImageAvatar(
-    $("sideAvatar"),
-    p.avatar_url,
-    p.full_name
-  );
+  const sideAvatar =
+    document.getElementById("sideAvatar");
 
-  setImageAvatar(
-    $("profileAvatar"),
-    p.avatar_url,
-    p.full_name
-  );
-
-  setImageAvatar(
-    $("profileEditAvatarPreview"),
-    p.avatar_url,
-    p.full_name
-  );
+  const profileAvatar =
+    document.getElementById("profileAvatar");
 
 
-  $("profileEditName").value =
+  if(p.avatar_url){
+
+    sideAvatar.innerHTML =
+      `<img src="${esc(p.avatar_url)}" alt="avatar">`;
+
+    profileAvatar.innerHTML =
+      `<img src="${esc(p.avatar_url)}" alt="avatar">`;
+
+  }else{
+
+    sideAvatar.textContent =
+      initialOf(p.full_name);
+
+    profileAvatar.textContent =
+      initialOf(p.full_name);
+
+  }
+
+
+  document.getElementById("profileEditName")
+    .value =
     p.full_name || "";
 
-  $("profileEditUsername").value =
+  document.getElementById("profileEditUsername")
+    .value =
     p.username || "";
 
 
-  $("navTrainer")
+  document.getElementById("navTrainer")
     .classList
     .toggle(
       "hidden",
       !isTrainer()
     );
 
-  $("navAdmin")
+  document.getElementById("navAdmin")
     .classList
     .toggle(
       "hidden",
       !isAdmin()
     );
+
 }
 
 
 function openProfileSetup(){
 
-  $("auth").classList.add("hidden");
-  $("app").classList.add("hidden");
-  $("setup").classList.remove("hidden");
+  document.getElementById("auth")
+    .classList
+    .add("hidden");
+
+  document.getElementById("app")
+    .classList
+    .add("hidden");
+
+  document.getElementById("setup")
+    .classList
+    .remove("hidden");
 
 
-  $("setupName").value =
+  document.getElementById("setupName")
+    .value =
     currentProfile?.full_name ||
     currentUser?.user_metadata?.full_name ||
     "";
 
-  $("setupUsername").value =
+  document.getElementById("setupUsername")
+    .value =
     currentProfile?.username ||
     currentUser?.user_metadata?.username ||
     "";
 
 
-  setImageAvatar(
-    $("setupAvatarPreview"),
-    currentProfile?.avatar_url,
-    currentProfile?.full_name ||
-    currentUser?.user_metadata?.full_name
-  );
+  const preview =
+    document.getElementById(
+      "setupAvatarPreview"
+    );
+
+
+  if(currentProfile?.avatar_url){
+
+    preview.innerHTML =
+      `<img src="${esc(currentProfile.avatar_url)}" alt="avatar">`;
+
+  }else{
+
+    preview.textContent =
+      initialOf(
+        currentProfile?.full_name ||
+        currentUser?.user_metadata?.full_name
+      );
+
+  }
+
 }
 
 
-/* =========================================================
-   AVATAR UPLOAD
-   ========================================================= */
+/* =========================
+   AVATAR
+========================= */
 
 async function uploadAvatar(file){
 
@@ -1716,14 +2062,13 @@ async function uploadAvatar(file){
     return null;
 
 
-  const allowed = [
-    "image/jpeg",
-    "image/png",
-    "image/webp"
-  ];
-
-
-  if(!allowed.includes(file.type)){
+  if(
+    ![
+      "image/jpeg",
+      "image/png",
+      "image/webp"
+    ].includes(file.type)
+  ){
 
     throw new Error(
       "Ավատարը պետք է լինի JPG, PNG կամ WEBP։"
@@ -1752,76 +2097,98 @@ async function uploadAvatar(file){
     `${currentUser.id}/${crypto.randomUUID()}.${ext}`;
 
 
-  const upload =
-    await db.storage
-      .from("avatars")
-      .upload(
-        path,
-        file,
-        {
-          upsert:false,
-          contentType:file.type
-        }
-      );
+  const {
+    error
+  } =
+  await db.storage
+    .from("avatars")
+    .upload(
+      path,
+      file,
+      {
+        upsert:false,
+        contentType:file.type
+      }
+    );
 
 
-  if(upload.error)
-    throw upload.error;
+  if(error)
+    throw error;
 
 
-  const publicUrl =
-    db.storage
-      .from("avatars")
-      .getPublicUrl(path);
+  const {
+    data
+  } =
+  db.storage
+    .from("avatars")
+    .getPublicUrl(path);
 
 
-  return publicUrl.data.publicUrl;
+  return data.publicUrl;
+
 }
 
-
-/* =========================================================
-   INITIAL PROFILE
-   ========================================================= */
 
 async function saveInitialProfile(){
 
   const name =
-    $("setupName").value.trim();
+    document
+      .getElementById("setupName")
+      .value
+      .trim();
 
   const username =
-    $("setupUsername").value
+    document
+      .getElementById("setupUsername")
+      .value
       .trim()
       .toLowerCase();
 
   const file =
-    $("setupAvatar").files[0];
+    document
+      .getElementById("setupAvatar")
+      .files[0];
 
 
   if(!name || !username){
 
-    toast("Լրացրու անունը և username-ը");
+    toast(
+      "Լրացրու անունը և username-ը"
+    );
+
     return;
+
   }
 
 
   if(!file){
 
-    toast("Ավատար ավելացնելը պարտադիր է");
+    toast(
+      "Ավատար ավելացնելը պարտադիր է"
+    );
+
     return;
+
   }
 
 
-  if(!/^[a-z0-9_.-]{3,30}$/.test(username)){
+  if(
+    !/^[a-z0-9_.-]{3,30}$/.test(username)
+  ){
 
     toast(
       "Username-ը պետք է լինի 3-30 նիշ"
     );
 
     return;
+
   }
 
 
-  const btn = $("setupSave");
+  const btn =
+    document.getElementById(
+      "setupSave"
+    );
 
   btn.disabled = true;
 
@@ -1854,34 +2221,39 @@ async function saveInitialProfile(){
       await uploadAvatar(file);
 
 
-    const update =
-      await db
-        .from("profiles")
-        .update({
-          full_name:name,
-          username:username,
-          avatar_url:avatarUrl,
-          updated_at:new Date().toISOString()
-        })
-        .eq("id",currentUser.id);
+    const {
+      error
+    } =
+    await db
+      .from("profiles")
+      .update({
+        full_name:name,
+        username,
+        avatar_url:avatarUrl,
+        updated_at:new Date().toISOString()
+      })
+      .eq("id",currentUser.id);
 
 
-    if(update.error)
-      throw update.error;
+    if(error)
+      throw error;
 
 
     await loadProfile();
 
-    toast("✅ Պրոֆիլը պատրաստ է");
+    toast(
+      "✅ Պրոֆիլը պատրաստ է"
+    );
 
     await loadAll();
+
 
   }catch(error){
 
     console.error(error);
 
     toast(
-      error?.message ||
+      error.message ||
       "Չհաջողվեց պահպանել պրոֆիլը"
     );
 
@@ -1890,42 +2262,56 @@ async function saveInitialProfile(){
     btn.disabled = false;
 
   }
+
 }
 
-
-/* =========================================================
-   SAVE PROFILE
-   ========================================================= */
 
 async function saveProfile(){
 
   const name =
-    $("profileEditName").value.trim();
+    document
+      .getElementById("profileEditName")
+      .value
+      .trim();
 
   const username =
-    $("profileEditUsername").value
+    document
+      .getElementById("profileEditUsername")
+      .value
       .trim()
       .toLowerCase();
 
   const file =
-    $("profileAvatarFile").files[0];
+    document
+      .getElementById("profileAvatarFile")
+      .files[0];
 
 
   if(!name || !username){
 
-    toast("Անունը և username-ը պարտադիր են");
+    toast(
+      "Անունը և username-ը պարտադիր են"
+    );
+
     return;
+
   }
 
 
-  if(!/^[a-z0-9_.-]{3,30}$/.test(username)){
+  if(
+    !/^[a-z0-9_.-]{3,30}$/.test(username)
+  ){
 
     toast("Սխալ username");
     return;
+
   }
 
 
-  const btn = $("profileSave");
+  const btn =
+    document.getElementById(
+      "profileSave"
+    );
 
   btn.disabled = true;
 
@@ -1966,32 +2352,37 @@ async function saveProfile(){
     }
 
 
-    const update =
-      await db
-        .from("profiles")
-        .update({
-          full_name:name,
-          username:username,
-          avatar_url:avatarUrl,
-          updated_at:new Date().toISOString()
-        })
-        .eq("id",currentUser.id);
+    const {
+      error
+    } =
+    await db
+      .from("profiles")
+      .update({
+        full_name:name,
+        username,
+        avatar_url:avatarUrl,
+        updated_at:new Date().toISOString()
+      })
+      .eq("id",currentUser.id);
 
 
-    if(update.error)
-      throw update.error;
+    if(error)
+      throw error;
 
 
     await loadProfile();
 
-    toast("✅ Պրոֆիլը պահպանվեց");
+    toast(
+      "✅ Պրոֆիլը պահպանվեց"
+    );
+
 
   }catch(error){
 
     console.error(error);
 
     toast(
-      error?.message ||
+      error.message ||
       "Չհաջողվեց պահպանել"
     );
 
@@ -2000,165 +2391,180 @@ async function saveProfile(){
     btn.disabled = false;
 
   }
+
 }
 
 
-/* =========================================================
-   FILE PREVIEWS
-   ========================================================= */
+/* =========================
+   AVATAR PREVIEWS
+========================= */
 
-$("setupAvatar").addEventListener(
-  "change",
-  function(){
+document
+  .getElementById("setupAvatar")
+  .addEventListener(
+    "change",
+    function(){
 
-    const file = this.files[0];
+      const file = this.files[0];
 
-    if(!file) return;
+      if(!file)
+        return;
 
-    if(!file.type.startsWith("image/")){
+      const preview =
+        document.getElementById(
+          "setupAvatarPreview"
+        );
 
-      toast("Ընտրիր նկար");
-      this.value = "";
-      return;
+      preview.innerHTML =
+        `<img src="${URL.createObjectURL(file)}"
+              alt="avatar preview">`;
+
     }
+  );
 
 
-    const url =
-      URL.createObjectURL(file);
+document
+  .getElementById("profileAvatarFile")
+  .addEventListener(
+    "change",
+    function(){
 
-    $("setupAvatarPreview").innerHTML =
-      `<img src="${url}" alt="avatar preview">`;
-  }
-);
+      const file = this.files[0];
 
+      if(!file)
+        return;
 
-$("profileAvatarFile").addEventListener(
-  "change",
-  function(){
+      const preview =
+        document.getElementById(
+          "profileEditAvatarPreview"
+        );
 
-    const file = this.files[0];
+      preview.innerHTML =
+        `<img src="${URL.createObjectURL(file)}"
+              alt="avatar preview">`;
 
-    if(!file) return;
-
-    if(!file.type.startsWith("image/")){
-
-      toast("Ընտրիր նկար");
-      this.value = "";
-      return;
     }
+  );
 
 
-    const url =
-      URL.createObjectURL(file);
-
-    $("profileEditAvatarPreview").innerHTML =
-      `<img src="${url}" alt="avatar preview">`;
-  }
-);
-
-
-/* =========================================================
+/* =========================
    EXERCISES
-   ========================================================= */
+========================= */
 
 async function loadExercises(){
 
-  const result =
-    await db
-      .from("exercises")
-      .select(
-        "id,name,description,xp,created_at"
-      )
-      .order(
-        "created_at",
-        {ascending:true}
-      );
+  const {
+    data,
+    error
+  } =
+  await db
+    .from("exercises")
+    .select(
+      "id,name,description,xp,created_at"
+    )
+    .order(
+      "created_at",
+      {
+        ascending:true
+      }
+    );
 
 
-  if(result.error)
-    throw result.error;
+  if(error)
+    throw error;
 
 
   exercises =
-    result.data || [];
+    data || [];
 
 
   const container =
-    $("exerciseList");
+    document.getElementById(
+      "exerciseList"
+    );
 
 
   if(!exercises.length){
 
-    container.innerHTML = `
-      <div class="card empty">
-        Վարժություններ դեռ չկան։
-      </div>
-    `;
+    container.innerHTML =
+      `
+        <div class="card empty">
+          Վարժություններ դեռ չկան։
+        </div>
+      `;
 
     return;
+
   }
 
 
   container.innerHTML =
     exercises
-      .map(exercise=>`
+      .map(
+        exercise =>
+        `
+          <div class="card exercise">
 
-        <div class="card exercise">
+            <div>
 
-          <div>
+              <div class="icon">💪</div>
 
-            <div class="icon">💪</div>
+              <b>
+                ${esc(exercise.name)}
+              </b>
 
-            <b>
-              ${esc(exercise.name)}
-            </b>
+              <div class="muted"
+                   style="margin-top:6px">
+                ${esc(exercise.description || "")}
+              </div>
 
-            <div class="muted"
-                 style="margin-top:6px">
-              ${esc(exercise.description || "")}
+              <span class="tag">
+                +${Number(exercise.xp || 0)} XP
+              </span>
+
             </div>
 
-            <span class="tag">
-              +${Number(exercise.xp || 0)} XP
-            </span>
+            <div class="muted">
+              Վարժությունը հասանելի է քեզ։
+            </div>
 
           </div>
-
-          <div class="muted">
-            Վարժությունը հասանելի է քեզ։
-          </div>
-
-        </div>
-
-      `)
+        `
+      )
       .join("");
+
 }
 
 
-/* =========================================================
+/* =========================
    PROFILES
-   ========================================================= */
+========================= */
 
 async function loadProfiles(){
 
-  const result =
-    await db
-      .from("profiles")
-      .select(
-        "id,full_name,role,xp,level,avatar_url,username,email,created_at"
-      )
-      .order(
-        "xp",
-        {ascending:false}
-      );
+  const {
+    data,
+    error
+  } =
+  await db
+    .from("profiles")
+    .select(
+      "id,full_name,role,xp,level,avatar_url,username,email,created_at"
+    )
+    .order(
+      "xp",
+      {
+        ascending:false
+      }
+    );
 
 
-  if(result.error)
-    throw result.error;
+  if(error)
+    throw error;
 
 
   profiles =
-    result.data || [];
+    data || [];
 
 
   renderLeaderboard();
@@ -2169,12 +2575,9 @@ async function loadProfiles(){
 
   if(isAdmin())
     renderAdmin();
+
 }
 
-
-/* =========================================================
-   LEADERBOARD
-   ========================================================= */
 
 function renderLeaderboard(){
 
@@ -2186,69 +2589,69 @@ function renderLeaderboard(){
     );
 
 
-  $("leaderboardBody").innerHTML =
-    sorted.length
-      ? sorted.map((p,index)=>`
+  document
+    .getElementById("leaderboardBody")
+    .innerHTML =
+    sorted
+      .map(
+        (p,index)=>
+        `
+          <tr class="${
+            p.id === currentUser.id
+              ? "me"
+              : ""
+          }">
 
-        <tr class="${
-          p.id === currentUser.id
-            ? "me"
-            : ""
-        }">
+            <td>
+              <b>#${index + 1}</b>
+            </td>
 
-          <td>
-            <b>#${index + 1}</b>
-          </td>
+            <td>
 
-          <td>
+              <div class="person">
 
-            <div class="person">
+                ${avatarHTML(p)}
 
-              ${avatarHTML(p)}
+                <div>
 
-              <div>
+                  <b>
+                    ${esc(p.full_name || "Օգտատեր")}
+                  </b>
 
-                <b>
-                  ${esc(
-                    p.full_name ||
-                    "Օգտատեր"
-                  )}
-                </b>
+                  <div class="muted">
+                    @${esc(p.username || "")}
+                    ·
+                    ${esc(roleLabel(p.role))}
+                  </div>
 
-                <div class="muted">
-                  @${esc(p.username || "")}
-                  ·
-                  ${esc(roleLabel(p.role))}
                 </div>
 
               </div>
 
-            </div>
+            </td>
 
-          </td>
+            <td style="text-align:right">
+              <b>
+                ${Number(p.xp || 0).toLocaleString()}
+              </b>
+              XP
+            </td>
 
-          <td style="text-align:right">
-            <b>
-              ${Number(p.xp || 0).toLocaleString()}
-            </b>
-            XP
-          </td>
-
-        </tr>
-
-      `).join("")
-      : `
+          </tr>
+        `
+      )
+      .join("") ||
+      `
         <tr>
-          <td>
-            Դեռ մասնակիցներ չկան։
-          </td>
+          <td>Դեռ մասնակիցներ չկան։</td>
         </tr>
       `;
 
 
   const index =
     sorted.findIndex(
-      p=>p.id === currentUser.id
+      p =>
+        p.id === currentUser.id
     );
 
 
@@ -2258,119 +2661,130 @@ function renderLeaderboard(){
       : null;
 
 
-  $("myRank").textContent =
+  document.getElementById("myRank")
+    .textContent =
     rank ? `#${rank}` : "—";
 
 
   const xp =
-    Number(currentProfile?.xp || 0);
+    Number(currentProfile.xp || 0);
 
 
-  $("myXP").textContent =
+  document.getElementById("myXP")
+    .textContent =
     xp.toLocaleString() + " XP";
 
 
-  $("myLevel").textContent =
+  document.getElementById("myLevel")
+    .textContent =
     " · Մակարդակ " +
-    (currentProfile?.level || 1);
+    (currentProfile.level || 1);
 
 
-  $("homeLevel").textContent =
-    currentProfile?.level || 1;
+  document.getElementById("homeLevel")
+    .textContent =
+    currentProfile.level || 1;
 
 
-  $("levelFill").style.width =
+  document.getElementById("levelFill")
+    .style.width =
     Math.min(
       100,
       Math.round(
-        ((xp % 150) / 150) * 100
+        (xp % 150) / 150 * 100
       )
     ) + "%";
 
 
   if(rank === 1){
 
-    $("rankGap").textContent =
+    document.getElementById("rankGap")
+      .textContent =
       "Դու առաջին տեղում ես։";
 
   }else if(rank > 1){
 
     const difference =
       Number(
-        sorted[rank - 2]?.xp || 0
+        sorted[rank - 2].xp || 0
       ) - xp;
 
-    $("rankGap").textContent =
+    document.getElementById("rankGap")
+      .textContent =
       `Հաջորդ մասնակցից՝ ${difference} XP`;
 
   }else{
 
-    $("rankGap").textContent =
+    document.getElementById("rankGap")
+      .textContent =
       "Վարկանիշը հաշվարկվում է։";
+
   }
+
 }
 
-
-/* =========================================================
-   PEOPLE
-   ========================================================= */
 
 function renderPeople(){
 
   const container =
-    $("peopleList");
+    document.getElementById(
+      "peopleList"
+    );
 
 
   if(!profiles.length){
 
-    container.innerHTML = `
-      <div class="empty">
-        Մասնակիցներ դեռ չկան։
-      </div>
-    `;
+    container.innerHTML =
+      `
+        <div class="empty">
+          Մասնակիցներ դեռ չկան։
+        </div>
+      `;
 
     return;
+
   }
 
 
   container.innerHTML =
-    profiles.map(p=>`
+    profiles
+      .map(
+        p =>
+        `
+          <div class="card person">
 
-      <div class="card person">
+            ${avatarHTML(p)}
 
-        ${avatarHTML(p)}
+            <div>
 
-        <div>
+              <b>
+                ${esc(p.full_name || "Օգտատեր")}
+              </b>
 
-          <b>
-            ${esc(
-              p.full_name ||
-              "Օգտատեր"
-            )}
-          </b>
+              <div class="muted">
+                @${esc(p.username || "")}
+              </div>
 
-          <div class="muted">
-            @${esc(p.username || "")}
+              <div class="muted">
+                ${esc(roleLabel(p.role))}
+                ·
+                ${Number(p.xp || 0).toLocaleString()}
+                XP
+              </div>
+
+            </div>
+
           </div>
+        `
+      )
+      .join("");
 
-          <div class="muted">
-            ${esc(roleLabel(p.role))}
-            ·
-            ${Number(p.xp || 0).toLocaleString()}
-            XP
-          </div>
-
-        </div>
-
-      </div>
-
-    `).join("");
 }
 
 
-/* =========================================================
+/* =========================
    TRAINER
-   ========================================================= */
+========================= */
 
 function renderTrainer(){
 
@@ -2380,86 +2794,100 @@ function renderTrainer(){
 
   const students =
     profiles.filter(
-      p=>p.role === "student"
+      p => p.role === "student"
     );
 
 
   const container =
-    $("trainerStudents");
+    document.getElementById(
+      "trainerStudents"
+    );
 
 
   if(!students.length){
 
-    container.innerHTML = `
-      <div class="empty">
-        Աշակերտներ դեռ չկան։
-      </div>
-    `;
+    container.innerHTML =
+      `
+        <div class="empty">
+          Աշակերտներ դեռ չկան։
+        </div>
+      `;
 
   }else{
 
     container.innerHTML =
-      students.map(p=>`
+      students
+        .map(
+          p =>
+          `
+            <div class="adminrow">
 
-        <div class="adminrow">
+              <div class="person">
 
-          <div class="person">
+                ${avatarHTML(p)}
 
-            ${avatarHTML(p)}
+                <div>
 
-            <div>
+                  <b>
+                    ${esc(p.full_name)}
+                  </b>
 
-              <b>
-                ${esc(p.full_name)}
-              </b>
+                  <div class="muted">
+                    @${esc(p.username || "")}
+                  </div>
 
-              <div class="muted">
-                @${esc(p.username || "")}
+                </div>
+
+              </div>
+
+              <div>
+                <b>
+                  ${Number(p.xp || 0).toLocaleString()}
+                </b>
+                XP
               </div>
 
             </div>
+          `
+        )
+        .join("");
 
-          </div>
-
-          <div>
-            <b>
-              ${Number(p.xp || 0).toLocaleString()}
-            </b>
-            XP
-          </div>
-
-        </div>
-
-      `).join("");
   }
 
 
-  $("trainerRecipient").innerHTML = `
-
-    <option value="">
-      Ընտրիր աշակերտին
-    </option>
-
-    <option value="all">
-      Բոլոր աշակերտները
-    </option>
-
-    ${students.map(p=>`
-
-      <option value="${p.id}">
-        ${esc(p.full_name)}
-        · @${esc(p.username || "")}
+  document.getElementById(
+    "trainerRecipient"
+  ).innerHTML =
+    `
+      <option value="">
+        Ընտրիր աշակերտին
       </option>
 
-    `).join("")}
+      <option value="all">
+        Բոլոր աշակերտները
+      </option>
 
-  `;
+      ${
+        students
+          .map(
+            p =>
+            `
+              <option value="${p.id}">
+                ${esc(p.full_name)}
+                · @${esc(p.username || "")}
+              </option>
+            `
+          )
+          .join("")
+      }
+    `;
+
 }
 
 
-/* =========================================================
+/* =========================
    ADMIN
-   ========================================================= */
+========================= */
 
 function renderAdmin(){
 
@@ -2467,116 +2895,121 @@ function renderAdmin(){
     return;
 
 
-  $("adminUsers").innerHTML =
-    profiles.map(p=>`
+  const container =
+    document.getElementById(
+      "adminUsers"
+    );
 
-      <div class="adminrow">
 
-        <div class="person">
+  container.innerHTML =
+    profiles
+      .map(
+        p =>
+        `
+          <div class="adminrow">
 
-          ${avatarHTML(p)}
+            <div class="person">
 
-          <div>
+              ${avatarHTML(p)}
 
-            <b>
-              ${esc(
-                p.full_name ||
-                "Օգտատեր"
-              )}
-            </b>
+              <div>
 
-            <div class="muted">
-              @${esc(p.username || "")}
-              ·
-              ${Number(p.xp || 0).toLocaleString()}
-              XP
-              · Level ${p.level || 1}
+                <b>
+                  ${esc(p.full_name || "Օգտատեր")}
+                </b>
+
+                <div class="muted">
+                  @${esc(p.username || "")}
+                  ·
+                  ${Number(p.xp || 0).toLocaleString()}
+                  XP
+                  · Level ${p.level || 1}
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="admincontrols">
+
+              <select
+                class="select"
+                style="width:130px"
+                onchange="changeRole('${p.id}',this.value)">
+
+                <option value="student"
+                  ${p.role === "student" ? "selected" : ""}>
+                  Աշակերտ
+                </option>
+
+                <option value="trainer"
+                  ${p.role === "trainer" ? "selected" : ""}>
+                  Մարզիչ
+                </option>
+
+                <option value="admin"
+                  ${p.role === "admin" ? "selected" : ""}>
+                  Ադմին
+                </option>
+
+              </select>
+
+              <input
+                id="xp_${p.id}"
+                type="number"
+                class="input smallinput"
+                value="100"
+                min="1">
+
+              <button
+                class="btn greenbtn"
+                onclick="changeXP('${p.id}',1)">
+                +XP
+              </button>
+
+              <button
+                class="btn redbtn"
+                onclick="changeXP('${p.id}',-1)">
+                -XP
+              </button>
+
             </div>
 
           </div>
-
-        </div>
-
-        <div class="admincontrols">
-
-          <select
-            class="select"
-            style="width:130px"
-            onchange="changeRole('${p.id}',this.value)"
-          >
-
-            <option value="student"
-              ${p.role === "student" ? "selected" : ""}>
-              Աշակերտ
-            </option>
-
-            <option value="trainer"
-              ${p.role === "trainer" ? "selected" : ""}>
-              Մարզիչ
-            </option>
-
-            <option value="admin"
-              ${p.role === "admin" ? "selected" : ""}>
-              Ադմին
-            </option>
-
-          </select>
-
-          <input
-            id="xp_${p.id}"
-            type="number"
-            class="input smallinput"
-            value="100"
-            min="1"
-          >
-
-          <button
-            class="btn greenbtn"
-            onclick="changeXP('${p.id}',1)"
-          >
-            +XP
-          </button>
-
-          <button
-            class="btn redbtn"
-            onclick="changeXP('${p.id}',-1)"
-          >
-            -XP
-          </button>
-
-        </div>
-
-      </div>
-
-    `).join("");
+        `
+      )
+      .join("");
 
 
-  $("adminRecipient").innerHTML = `
-
-    <option value="">
-      Ընտրիր օգտատիրոջը
-    </option>
-
-    <option value="all">
-      Բոլոր օգտատերերը
-    </option>
-
-    ${profiles.map(p=>`
-
-      <option value="${p.id}">
-        ${esc(p.full_name)}
-        · ${esc(roleLabel(p.role))}
+  document.getElementById(
+    "adminRecipient"
+  ).innerHTML =
+    `
+      <option value="">
+        Ընտրիր օգտատիրոջը
       </option>
 
-    `).join("")}
+      <option value="all">
+        Բոլոր օգտատերերը
+      </option>
 
-  `;
+      ${
+        profiles
+          .map(
+            p =>
+            `
+              <option value="${p.id}">
+                ${esc(p.full_name)}
+                · ${esc(roleLabel(p.role))}
+              </option>
+            `
+          )
+          .join("")
+      }
+    `;
+
 }
 
-
-/* =========================================================
-   ADMIN ROLE
-   ========================================================= */
 
 async function changeRole(id,newRole){
 
@@ -2598,47 +3031,50 @@ async function changeRole(id,newRole){
 
       await loadProfiles();
       return;
+
     }
+
   }
 
 
   try{
 
-    const result =
-      await db
-        .from("profiles")
-        .update({
-          role:newRole,
-          updated_at:new Date().toISOString()
-        })
-        .eq("id",id);
+    const {
+      error
+    } =
+    await db
+      .from("profiles")
+      .update({
+        role:newRole,
+        updated_at:new Date().toISOString()
+      })
+      .eq("id",id);
 
 
-    if(result.error)
-      throw result.error;
+    if(error)
+      throw error;
 
 
     toast("Դերը փոխվեց");
 
     await loadAll();
 
+
   }catch(error){
 
     console.error(error);
 
     toast(
-      error?.message ||
+      error.message ||
       "Չհաջողվեց փոխել դերը"
     );
 
     await loadProfiles();
+
   }
+
 }
 
-
-/* =========================================================
-   ADMIN XP
-   ========================================================= */
 
 async function changeXP(id,sign){
 
@@ -2647,7 +3083,9 @@ async function changeXP(id,sign){
 
 
   const input =
-    $("xp_" + id);
+    document.getElementById(
+      "xp_" + id
+    );
 
 
   const amount =
@@ -2663,23 +3101,26 @@ async function changeXP(id,sign){
 
     toast("Գրիր XP-ի քանակը");
     return;
+
   }
 
 
   try{
 
-    const result =
-      await db.rpc(
-        "admin_change_xp",
-        {
-          p_user_id:id,
-          p_delta:sign * amount
-        }
-      );
+    const {
+      error
+    } =
+    await db.rpc(
+      "admin_change_xp",
+      {
+        p_user_id:id,
+        p_delta:sign * amount
+      }
+    );
 
 
-    if(result.error)
-      throw result.error;
+    if(error)
+      throw error;
 
 
     toast(
@@ -2691,21 +3132,24 @@ async function changeXP(id,sign){
 
     await loadAll();
 
+
   }catch(error){
 
     console.error(error);
 
     toast(
-      error?.message ||
+      error.message ||
       "Չհաջողվեց փոխել XP-ն"
     );
+
   }
+
 }
 
 
-/* =========================================================
+/* =========================
    NOTIFICATIONS
-   ========================================================= */
+========================= */
 
 async function sendNotification(
   recipient,
@@ -2715,7 +3159,9 @@ async function sendNotification(
 ){
 
   if(!recipient)
-    throw new Error("Ընտրիր ստացողին");
+    throw new Error(
+      "Ընտրիր ստացողին"
+    );
 
 
   if(!title || !message)
@@ -2731,41 +3177,39 @@ async function sendNotification(
 
     targets =
       profiles.map(
-        p=>p.id
+        p => p.id
       );
 
   }else{
 
     targets = [recipient];
+
   }
-
-
-  if(!targets.length)
-    throw new Error(
-      "Ստացողներ չկան"
-    );
 
 
   const rows =
     targets.map(
-      userId=>({
+      userId => ({
         user_id:userId,
-        type:type,
-        title:title,
-        message:message,
+        type,
+        title,
+        message,
         read_at:null
       })
     );
 
 
-  const result =
-    await db
-      .from("notifications")
-      .insert(rows);
+  const {
+    error
+  } =
+  await db
+    .from("notifications")
+    .insert(rows);
 
 
-  if(result.error)
-    throw result.error;
+  if(error)
+    throw error;
+
 }
 
 
@@ -2776,17 +3220,19 @@ async function sendTrainerNotification(){
 
 
   const recipient =
-    $("trainerRecipient").value;
+    document.getElementById(
+      "trainerRecipient"
+    ).value;
 
   const title =
-    $("trainerNotificationTitle")
-      .value
-      .trim();
+    document.getElementById(
+      "trainerNotificationTitle"
+    ).value.trim();
 
   const message =
-    $("trainerNotificationMessage")
-      .value
-      .trim();
+    document.getElementById(
+      "trainerNotificationMessage"
+    ).value.trim();
 
 
   try{
@@ -2799,20 +3245,31 @@ async function sendTrainerNotification(){
     );
 
 
-    $("trainerNotificationTitle").value = "";
-    $("trainerNotificationMessage").value = "";
+    document.getElementById(
+      "trainerNotificationTitle"
+    ).value = "";
 
-    toast("🔔 Ծանուցումը ուղարկվեց");
+    document.getElementById(
+      "trainerNotificationMessage"
+    ).value = "";
+
+
+    toast(
+      "🔔 Ծանուցումը ուղարկվեց"
+    );
+
 
   }catch(error){
 
     console.error(error);
 
     toast(
-      error?.message ||
+      error.message ||
       "Չհաջողվեց ուղարկել"
     );
+
   }
+
 }
 
 
@@ -2823,17 +3280,19 @@ async function sendAdminNotification(){
 
 
   const recipient =
-    $("adminRecipient").value;
+    document.getElementById(
+      "adminRecipient"
+    ).value;
 
   const title =
-    $("adminNotificationTitle")
-      .value
-      .trim();
+    document.getElementById(
+      "adminNotificationTitle"
+    ).value.trim();
 
   const message =
-    $("adminNotificationMessage")
-      .value
-      .trim();
+    document.getElementById(
+      "adminNotificationMessage"
+    ).value.trim();
 
 
   try{
@@ -2846,26 +3305,33 @@ async function sendAdminNotification(){
     );
 
 
-    $("adminNotificationTitle").value = "";
-    $("adminNotificationMessage").value = "";
+    document.getElementById(
+      "adminNotificationTitle"
+    ).value = "";
 
-    toast("🔔 Ծանուցումը ուղարկվեց");
+    document.getElementById(
+      "adminNotificationMessage"
+    ).value = "";
+
+
+    toast(
+      "🔔 Ծանուցումը ուղարկվեց"
+    );
+
 
   }catch(error){
 
     console.error(error);
 
     toast(
-      error?.message ||
+      error.message ||
       "Չհաջողվեց ուղարկել"
     );
+
   }
+
 }
 
-
-/* =========================================================
-   LOAD NOTIFICATIONS
-   ========================================================= */
 
 async function loadNotifications(){
 
@@ -2873,32 +3339,35 @@ async function loadNotifications(){
     return;
 
 
-  const result =
-    await db
-      .from("notifications")
-      .select(
-        "id,user_id,type,title,message,read_at,created_at"
-      )
-      .eq(
-        "user_id",
-        currentUser.id
-      )
-      .order(
-        "created_at",
-        {ascending:false}
-      )
-      .limit(100);
+  const {
+    data,
+    error
+  } =
+  await db
+    .from("notifications")
+    .select(
+      "id,user_id,type,title,message,read_at,created_at"
+    )
+    .eq("user_id",currentUser.id)
+    .order(
+      "created_at",
+      {
+        ascending:false
+      }
+    )
+    .limit(100);
 
 
-  if(result.error)
-    throw result.error;
+  if(error)
+    throw error;
 
 
   notifications =
-    result.data || [];
+    data || [];
 
 
   renderNotifications();
+
 }
 
 
@@ -2906,134 +3375,147 @@ function renderNotifications(){
 
   const unread =
     notifications.filter(
-      n=>!n.read_at
+      n => !n.read_at
     ).length;
 
 
-  $("navBadge").textContent =
+  const badge =
+    document.getElementById(
+      "navBadge"
+    );
+
+
+  badge.textContent =
     unread > 99
       ? "99+"
       : unread;
 
 
-  $("navBadge")
-    .classList
-    .toggle(
-      "hidden",
-      unread === 0
+  badge.classList.toggle(
+    "hidden",
+    unread === 0
+  );
+
+
+  const container =
+    document.getElementById(
+      "notificationList"
     );
 
 
   if(!notifications.length){
 
-    $("notificationList").innerHTML = `
-      <div class="empty">
-        Ծանուցումներ դեռ չկան։
-      </div>
-    `;
+    container.innerHTML =
+      `
+        <div class="empty">
+          Ծանուցումներ դեռ չկան։
+        </div>
+      `;
 
     return;
+
   }
 
 
-  $("notificationList").innerHTML =
-    notifications.map(n=>`
+  container.innerHTML =
+    notifications
+      .map(
+        n =>
+        `
+          <div class="notification ${
+            n.read_at ? "" : "unread"
+          }">
 
-      <div class="notification ${
-        n.read_at ? "" : "unread"
-      }">
+            <div class="notificationhead">
 
-        <div class="notificationhead">
+              <div>
 
-          <div>
+                <b>
+                  ${esc(n.title)}
+                </b>
 
-            <b>
-              ${esc(n.title)}
-            </b>
+                ${
+                  !n.read_at
+                    ? `
+                      <span
+                        class="badge"
+                        style="margin-left:7px">
+                        Նոր
+                      </span>
+                    `
+                    : ""
+                }
+
+              </div>
+
+              <div class="notificationtime">
+                ${new Date(
+                  n.created_at
+                ).toLocaleString()}
+              </div>
+
+            </div>
+
+            <div style="margin-top:7px">
+              ${esc(n.message)}
+            </div>
 
             ${
               !n.read_at
                 ? `
-                  <span
-                    class="badge"
-                    style="margin-left:7px"
-                  >
-                    Նոր
-                  </span>
+                  <div style="margin-top:10px">
+
+                    <button
+                      class="topbtn"
+                      onclick="markNotificationRead('${n.id}')">
+                      ✓ Կարդացել եմ
+                    </button>
+
+                  </div>
                 `
                 : ""
             }
 
           </div>
+        `
+      )
+      .join("");
 
-          <div class="notificationtime">
-            ${new Date(
-              n.created_at
-            ).toLocaleString()}
-          </div>
-
-        </div>
-
-        <div style="margin-top:7px">
-          ${esc(n.message)}
-        </div>
-
-        ${
-          !n.read_at
-            ? `
-              <div style="margin-top:10px">
-
-                <button
-                  class="topbtn"
-                  onclick="markNotificationRead('${n.id}')"
-                >
-                  ✓ Կարդացել եմ
-                </button>
-
-              </div>
-            `
-            : ""
-        }
-
-      </div>
-
-    `).join("");
 }
 
-
-/* =========================================================
-   MARK NOTIFICATIONS
-   ========================================================= */
 
 async function markNotificationRead(id){
 
   try{
 
-    const result =
-      await db
-        .from("notifications")
-        .update({
-          read_at:new Date().toISOString()
-        })
-        .eq("id",id)
-        .eq("user_id",currentUser.id);
+    const {
+      error
+    } =
+    await db
+      .from("notifications")
+      .update({
+        read_at:new Date().toISOString()
+      })
+      .eq("id",id)
+      .eq("user_id",currentUser.id);
 
 
-    if(result.error)
-      throw result.error;
+    if(error)
+      throw error;
 
 
     await loadNotifications();
 
+
   }catch(error){
 
-    console.error(error);
-
     toast(
-      error?.message ||
+      error.message ||
       "Չհաջողվեց"
     );
+
   }
+
 }
 
 
@@ -3041,24 +3523,20 @@ async function markAllNotificationsRead(){
 
   try{
 
-    const result =
-      await db
-        .from("notifications")
-        .update({
-          read_at:new Date().toISOString()
-        })
-        .eq(
-          "user_id",
-          currentUser.id
-        )
-        .is(
-          "read_at",
-          null
-        );
+    const {
+      error
+    } =
+    await db
+      .from("notifications")
+      .update({
+        read_at:new Date().toISOString()
+      })
+      .eq("user_id",currentUser.id)
+      .is("read_at",null);
 
 
-    if(result.error)
-      throw result.error;
+    if(error)
+      throw error;
 
 
     await loadNotifications();
@@ -3067,21 +3545,22 @@ async function markAllNotificationsRead(){
       "✓ Բոլորը նշվեցին որպես կարդացված"
     );
 
+
   }catch(error){
 
-    console.error(error);
-
     toast(
-      error?.message ||
+      error.message ||
       "Չհաջողվեց"
     );
+
   }
+
 }
 
 
-/* =========================================================
+/* =========================
    STATS
-   ========================================================= */
+========================= */
 
 async function loadStats(){
 
@@ -3093,33 +3572,36 @@ async function loadStats(){
   );
 
 
-  const result =
-    await db
-      .from("activity_log")
-      .select(
-        "details,created_at"
-      )
-      .eq(
-        "target_user_id",
-        currentUser.id
-      )
-      .gte(
-        "created_at",
-        since.toISOString()
-      );
+  const {
+    data,
+    error
+  } =
+  await db
+    .from("activity_log")
+    .select(
+      "details,created_at"
+    )
+    .eq(
+      "target_user_id",
+      currentUser.id
+    )
+    .gte(
+      "created_at",
+      since.toISOString()
+    );
 
 
-  if(result.error){
+  if(error){
 
-    $("todayXP").textContent = "—";
-    $("weekXP").textContent = "—";
+    document.getElementById("todayXP")
+      .textContent = "—";
+
+    document.getElementById("weekXP")
+      .textContent = "—";
 
     return;
+
   }
-
-
-  const rows =
-    result.data || [];
 
 
   let weekXP = 0;
@@ -3134,12 +3616,12 @@ async function loadStats(){
   );
 
 
-  rows.forEach(row=>{
+  (data || []).forEach(row=>{
 
     const xp =
       Number(
-        row.details?.xp ??
-        row.details?.amount ??
+        row.details?.xp ||
+        row.details?.amount ||
         0
       );
 
@@ -3162,17 +3644,20 @@ async function loadStats(){
   });
 
 
-  $("todayXP").textContent =
+  document.getElementById("todayXP")
+    .textContent =
     todayXP + " XP";
 
-  $("weekXP").textContent =
+  document.getElementById("weekXP")
+    .textContent =
     weekXP + " XP";
+
 }
 
 
-/* =========================================================
+/* =========================
    ACTIVITY
-   ========================================================= */
+========================= */
 
 async function loadActivity(){
 
@@ -3180,75 +3665,91 @@ async function loadActivity(){
     return;
 
 
-  const result =
-    await db
-      .from("activity_log")
-      .select(
-        "id,actor_id,target_user_id,action,details,created_at"
-      )
-      .order(
-        "created_at",
-        {ascending:false}
-      )
-      .limit(30);
+  const {
+    data,
+    error
+  } =
+  await db
+    .from("activity_log")
+    .select(
+      "id,actor_id,target_user_id,action,details,created_at"
+    )
+    .order(
+      "created_at",
+      {
+        ascending:false
+      }
+    )
+    .limit(30);
 
 
-  if(result.error){
-
-    $("activityList").innerHTML = `
-      <div class="muted">
-        Գործողությունների պատմությունը հասանելի չէ։
-      </div>
-    `;
-
-    return;
-  }
+  const container =
+    document.getElementById(
+      "activityList"
+    );
 
 
-  if(!result.data?.length){
+  if(error){
 
-    $("activityList").innerHTML = `
-      <div class="muted">
-        Պատմություն դեռ չկա։
-      </div>
-    `;
-
-    return;
-  }
-
-
-  $("activityList").innerHTML =
-    result.data.map(row=>`
-
-      <div class="notification">
-
-        <b>
-          ${esc(row.action)}
-        </b>
-
+    container.innerHTML =
+      `
         <div class="muted">
-          ${new Date(
-            row.created_at
-          ).toLocaleString()}
+          Գործողությունների պատմությունը հասանելի չէ։
         </div>
+      `;
 
-      </div>
+    return;
 
-    `).join("");
+  }
+
+
+  if(!data?.length){
+
+    container.innerHTML =
+      `
+        <div class="muted">
+          Պատմություն դեռ չկա։
+        </div>
+      `;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    data
+      .map(
+        row =>
+        `
+          <div class="notification">
+
+            <b>
+              ${esc(row.action)}
+            </b>
+
+            <div class="muted">
+              ${new Date(
+                row.created_at
+              ).toLocaleString()}
+            </div>
+
+          </div>
+        `
+      )
+      .join("");
+
 }
 
 
-/* =========================================================
-   LOAD EVERYTHING
-   ========================================================= */
+/* =========================
+   LOAD ALL
+========================= */
 
 async function loadAll(){
 
-  if(!currentUser || loading)
+  if(!currentUser)
     return;
-
-
-  loading = true;
 
 
   try{
@@ -3275,27 +3776,21 @@ async function loadAll(){
 
   }catch(error){
 
-    console.error(
-      "LOAD ERROR:",
-      error
-    );
+    console.error(error);
 
     toast(
-      error?.message ||
+      error.message ||
       "Չհաջողվեց բեռնել տվյալները"
     );
 
-  }finally{
-
-    loading = false;
-
   }
+
 }
 
 
-/* =========================================================
-   PAGE NAVIGATION
-   ========================================================= */
+/* =========================
+   NAVIGATION
+========================= */
 
 function showPage(id){
 
@@ -3311,35 +3806,41 @@ function showPage(id){
   ];
 
 
-  pages.forEach(page=>{
+  pages.forEach(
+    page=>{
 
-    const el =
-      $("page-" + page);
+      const el =
+        document.getElementById(
+          "page-" + page
+        );
 
-    if(!el)
-      return;
+      if(!el)
+        return;
 
 
-    el.classList.toggle(
-      "hidden",
-      page !== id
-    );
+      el.classList.toggle(
+        "hidden",
+        page !== id
+      );
 
-  });
+    }
+  );
 
 
   document
     .querySelectorAll(
       ".nav button[data-page]"
     )
-    .forEach(button=>{
+    .forEach(
+      button=>{
 
-      button.classList.toggle(
-        "active",
-        button.dataset.page === id
-      );
+        button.classList.toggle(
+          "active",
+          button.dataset.page === id
+        );
 
-    });
+      }
+    );
 
 
   const titles = {
@@ -3354,33 +3855,31 @@ function showPage(id){
   };
 
 
-  $("pageTitle").textContent =
+  document.getElementById(
+    "pageTitle"
+  ).textContent =
     titles[id] || "Forge";
 
 
-  if(id === "notifications"){
-    loadNotifications().catch(console.error);
-  }
+  if(id === "notifications")
+    loadNotifications();
 
-
-  if(id === "trainer" && isTrainer()){
+  if(id === "trainer" && isTrainer())
     renderTrainer();
-  }
-
 
   if(id === "admin" && isAdmin()){
 
     renderAdmin();
+    loadActivity();
 
-    loadActivity()
-      .catch(console.error);
   }
+
 }
 
 
-/* =========================================================
-   AUTH STATE
-   ========================================================= */
+/* =========================
+   SUPABASE AUTH
+========================= */
 
 db.auth.onAuthStateChange(
   async (_event,newSession)=>{
@@ -3392,30 +3891,91 @@ db.auth.onAuthStateChange(
       newSession?.user || null;
 
 
-    if(!newSession){
+    /*
+      Երբ Supabase-ը recovery link-ից հետո
+      PASSWORD_RECOVERY event է ուղարկում,
+      ցույց ենք տալիս նոր գաղտնաբառի էջը։
+    */
 
-      $("app").classList.add("hidden");
-      $("setup").classList.add("hidden");
-      $("auth").classList.remove("hidden");
+    if(_event === "PASSWORD_RECOVERY"){
+
+      document
+        .getElementById("auth")
+        .classList
+        .remove("hidden");
+
+      document
+        .getElementById("app")
+        .classList
+        .add("hidden");
+
+      document
+        .getElementById("setup")
+        .classList
+        .add("hidden");
+
+      document
+        .getElementById("normalAuth")
+        .classList
+        .add("hidden");
+
+      document
+        .getElementById("forgotAuth")
+        .classList
+        .add("hidden");
+
+      document
+        .getElementById("newPasswordAuth")
+        .classList
+        .remove("hidden");
+
+      document
+        .getElementById("authTitle")
+        .textContent =
+        "Նոր գաղտնաբառ";
+
+      document
+        .getElementById("authText")
+        .textContent =
+        "Ստեղծիր նոր գաղտնաբառ";
 
       return;
+
     }
 
 
-    $("auth").classList.add("hidden");
+    if(!newSession){
+
+      document
+        .getElementById("app")
+        .classList
+        .add("hidden");
+
+      document
+        .getElementById("setup")
+        .classList
+        .add("hidden");
+
+      document
+        .getElementById("auth")
+        .classList
+        .remove("hidden");
+
+      showLogin();
+
+      return;
+
+    }
+
+
+    document
+      .getElementById("auth")
+      .classList
+      .add("hidden");
 
 
     setTimeout(
-      ()=>{
-        loadAll()
-          .catch(error=>{
-            console.error(error);
-            toast(
-              error?.message ||
-              "Չհաջողվեց բեռնել էջը"
-            );
-          });
-      },
+      ()=>loadAll(),
       0
     );
 
@@ -3423,49 +3983,49 @@ db.auth.onAuthStateChange(
 );
 
 
-/* =========================================================
-   INITIAL SESSION
-   ========================================================= */
+/* =========================
+   START
+========================= */
 
-(async function init(){
+(async()=>{
 
   try{
 
-    const result =
-      await db.auth.getSession();
+    const {
+      data
+    } =
+    await db.auth.getSession();
 
 
-    if(result.error)
-      throw result.error;
-
-
-    if(result.data.session){
+    if(data.session){
 
       session =
-        result.data.session;
+        data.session;
 
       currentUser =
-        result.data.session.user;
+        data.session.user;
 
       await loadAll();
 
     }else{
 
-      $("auth")
-        .classList
-        .remove("hidden");
+      /*
+        Եթե URL-ը recovery link է,
+        Supabase onAuthStateChange-ը կբռնի
+        PASSWORD_RECOVERY event-ը։
+      */
+
+      showLogin();
 
     }
 
+
   }catch(error){
 
-    console.error(
-      "INIT ERROR:",
-      error
-    );
+    console.error(error);
 
     toast(
-      error?.message ||
+      error.message ||
       "Չհաջողվեց բացել սեսիան"
     );
 
@@ -3474,26 +4034,24 @@ db.auth.onAuthStateChange(
 })();
 
 
-/* =========================================================
-   AUTO REFRESH NOTIFICATIONS
-   ========================================================= */
+/* =========================
+   AUTO REFRESH
+========================= */
 
 setInterval(
   async()=>{
 
-    if(!currentUser)
-      return;
+    if(currentUser){
 
-    try{
+      try{
 
-      await loadNotifications();
+        await loadNotifications();
 
-    }catch(error){
+      }catch(error){
 
-      console.error(
-        "Notification refresh:",
-        error
-      );
+        console.error(error);
+
+      }
 
     }
 
@@ -3501,22 +4059,8 @@ setInterval(
   20000
 );
 
-
-/* =========================================================
-   DATE
-   ========================================================= */
-
-$("dateText").textContent =
-  new Intl.DateTimeFormat(
-    "hy-AM",
-    {
-      weekday:"long",
-      day:"numeric",
-      month:"long"
-    }
-  ).format(new Date());
-
 </script>
 
 </body>
 </html>
+```
