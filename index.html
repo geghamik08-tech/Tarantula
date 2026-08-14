@@ -1392,6 +1392,52 @@ function toast(t){
 renderBoard();
 
 </script>
+  <!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+    // ================================
+    // SUPABASE
+    // ================================
+
+    const SUPABASE_URL = "https://ohkxdcioxbssrnqaljxk.supabase.co";
+
+    // ВСТАВЬ СЮДА СКОПИРОВАННЫЙ PUBLISHABLE / ANON KEY
+    const SUPABASE_KEY = "sb_publishable__EWGkXyiUCI5Zy9ptxIk6Q_dXAAD9tq";
+
+    const supabaseClient = supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+    // Проверяем подключение
+    async function checkSupabaseConnection() {
+        try {
+            const { data, error } = await supabaseClient.auth.getSession();
+
+            if (error) {
+                console.error("Supabase error:", error);
+                return;
+            }
+
+            console.log("Supabase подключён успешно!");
+
+            if (data.session) {
+                console.log(
+                    "Пользователь авторизован:",
+                    data.session.user.email
+                );
+            } else {
+                console.log("Пользователь не авторизован");
+            }
+
+        } catch (error) {
+            console.error("Ошибка подключения:", error);
+        }
+    }
+
+    checkSupabaseConnection();
+</script>
 
 </body>
 </html>
