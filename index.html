@@ -75,7 +75,7 @@ async function logout(){await db.auth.signOut();session=null;currentUser=null;cu
 function showAuth(){$("app").classList.add("hidden");$("setup").classList.add("hidden");$("auth").classList.remove("hidden")}
 function showApp(){$("auth").classList.add("hidden");$("setup").classList.add("hidden");$("app").classList.remove("hidden")}
 async function loadProfile(){
-  const {data,error}=await db.from("profiles").select("id,full_name,role,xp,level,avatar_url,created_at,updated_at,username,email").eq("id",currentUser.id).maybeSingle();
+  const {data,error}=await db.from("profiles").select("id,full_name,role,xp,level,avatar_url,created_at,updated_at,username").eq("id",currentUser.id).maybeSingle();
   if(error)throw error;
   if(!data)throw new Error("Քո profile-ը չի գտնվել։");
   currentProfile=data;
