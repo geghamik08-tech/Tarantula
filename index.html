@@ -1,0 +1,1397 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FORGE v3 — Մրցահարթակ</title>
+
+<style>
+:root{
+  --bg:#080b12;
+  --p:#111722;
+  --p2:#181f2b;
+  --line:#293343;
+  --t:#f5f7fb;
+  --m:#8f9bad;
+  --o:#ff7138;
+  --r:#ff4e68;
+  --b:#5c8cff;
+  --g:#43d991;
+  --v:#a978ff
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 80% -5%,#412515,transparent 32%),
+    radial-gradient(circle at 0 35%,#10264e,transparent 30%),
+    var(--bg);
+  color:var(--t);
+  font:15px system-ui,"Noto Sans Armenian",sans-serif
+}
+
+.app{
+  display:flex;
+  min-height:100vh
+}
+
+.side{
+  width:250px;
+  background:#0a0e16ee;
+  border-right:1px solid var(--line);
+  padding:20px 14px;
+  position:sticky;
+  top:0;
+  height:100vh
+}
+
+.logo{
+  font-size:25px;
+  font-weight:950;
+  letter-spacing:4px;
+  padding:5px 10px 20px
+}
+
+.logo span{
+  color:var(--o)
+}
+
+.role{
+  margin:0 7px 15px;
+  padding:10px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--p);
+  font-size:12px
+}
+
+.nav button{
+  width:100%;
+  background:transparent;
+  color:var(--m);
+  border:0;
+  padding:11px 13px;
+  text-align:left;
+  border-radius:11px;
+  margin:2px 0;
+  cursor:pointer
+}
+
+.nav button:hover,
+.nav button.active{
+  background:var(--p2);
+  color:#fff
+}
+
+.account{
+  position:absolute;
+  bottom:16px;
+  left:14px;
+  right:14px;
+  border:1px solid var(--line);
+  background:var(--p);
+  padding:11px;
+  border-radius:13px
+}
+
+.avatar{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  object-fit:cover;
+  background:linear-gradient(135deg,var(--o),var(--r));
+  display:grid;
+  place-items:center;
+  font-weight:900
+}
+
+.main{
+  width:100%;
+  max-width:1450px;
+  margin:auto;
+  padding:27px
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:22px
+}
+
+.title{
+  font-size:28px;
+  font-weight:900
+}
+
+.muted{
+  color:var(--m)
+}
+
+.topbtn{
+  background:var(--p);
+  border:1px solid var(--line);
+  border-radius:11px;
+  padding:10px;
+  color:#fff;
+  cursor:pointer
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1.4fr 1fr;
+  gap:15px
+}
+
+.card{
+  background:linear-gradient(145deg,#141b27,#10151e);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:19px;
+  box-shadow:0 15px 50px #0004
+}
+
+.rank{
+  font-size:55px;
+  font-weight:950;
+  line-height:1;
+  margin:7px 0
+}
+
+.bar{
+  height:8px;
+  background:#252d39;
+  border-radius:20px;
+  overflow:hidden;
+  margin:13px 0
+}
+
+.fill{
+  height:100%;
+  width:84%;
+  background:linear-gradient(90deg,var(--o),var(--r),var(--v))
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+  margin-top:15px
+}
+
+.stat{
+  padding:12px;
+  background:#0e141d;
+  border:1px solid var(--line);
+  border-radius:12px
+}
+
+.stat b{
+  display:block;
+  font-size:21px
+}
+
+.section{
+  margin-top:19px
+}
+
+.section h2{
+  font-size:18px;
+  margin:0 0 12px
+}
+
+.ex{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:11px
+}
+
+.exercise{
+  min-height:145px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between
+}
+
+.icon{
+  font-size:27px
+}
+
+.tag{
+  display:inline-block;
+  background:#202735;
+  padding:5px 8px;
+  border-radius:999px;
+  font-size:12px
+}
+
+.btn{
+  background:linear-gradient(90deg,var(--o),var(--r));
+  border:0;
+  color:white;
+  font-weight:850;
+  padding:10px 12px;
+  border-radius:10px;
+  cursor:pointer
+}
+
+.btn:hover{
+  transform:translateY(-2px)
+}
+
+table{
+  width:100%;
+  border-collapse:collapse
+}
+
+td{
+  padding:12px 7px;
+  border-bottom:1px solid #232b36
+}
+
+.me{
+  background:#18202c
+}
+
+.green{
+  color:var(--g)
+}
+
+.red{
+  color:var(--r)
+}
+
+.submission{
+  display:grid;
+  grid-template-columns:100px 1fr auto;
+  gap:14px;
+  align-items:center;
+  border-bottom:1px solid var(--line);
+  padding:14px 0
+}
+
+.actions{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap
+}
+
+.accept{
+  background:var(--g);
+  color:#07140e
+}
+
+.reject{
+  background:var(--r)
+}
+
+.blue{
+  background:var(--b)
+}
+
+.purple{
+  background:var(--v);
+  color:#100b1b
+}
+
+.adminrow{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:12px;
+  padding:13px 0;
+  border-bottom:1px solid var(--line);
+  align-items:center
+}
+
+.adminrow input{
+  width:100px;
+  background:#0a0f16;
+  color:#fff;
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:9px
+}
+
+.person{
+  display:flex;
+  align-items:center;
+  gap:11px
+}
+
+.person img{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  object-fit:cover;
+  background:#27303d
+}
+
+.people{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:#000b;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:5
+}
+
+.modal.show{
+  display:flex
+}
+
+.box{
+  max-width:600px;
+  width:100%;
+  background:#121925;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:21px
+}
+
+.preview{
+  width:100%;
+  max-height:320px;
+  object-fit:contain;
+  border-radius:12px;
+  background:#080b11;
+  margin:10px 0
+}
+
+.box input,
+.box textarea,
+.box select{
+  width:100%;
+  background:#090e15;
+  color:#fff;
+  border:1px solid var(--line);
+  padding:11px;
+  border-radius:9px;
+  margin:7px 0 12px
+}
+
+.toast{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  background:#1a2230;
+  border:1px solid #394557;
+  padding:14px 16px;
+  border-radius:12px;
+  transform:translateY(120px);
+  opacity:0;
+  transition:.3s;
+  z-index:10
+}
+
+.toast.show{
+  transform:none;
+  opacity:1
+}
+
+.hidden{
+  display:none!important
+}
+
+@media(max-width:1000px){
+  .side{
+    width:72px
+  }
+
+  .logo{
+    font-size:15px
+  }
+
+  .nav button{
+    font-size:0
+  }
+
+  .nav button:before{
+    content:"◆";
+    font-size:12px
+  }
+
+  .role,
+  .account{
+    display:none
+  }
+
+  .grid{
+    grid-template-columns:1fr
+  }
+
+  .ex{
+    grid-template-columns:repeat(2,1fr)
+  }
+
+  .people{
+    grid-template-columns:1fr 1fr
+  }
+}
+
+@media(max-width:650px){
+  .side{
+    display:none
+  }
+
+  .main{
+    padding:16px
+  }
+
+  .ex,
+  .people{
+    grid-template-columns:1fr
+  }
+
+  .submission{
+    grid-template-columns:70px 1fr
+  }
+
+  .actions{
+    grid-column:1/-1
+  }
+
+  .thumb{
+    width:70px;
+    height:55px
+  }
+}
+
+.legend{
+  display:inline-flex;
+  gap:7px;
+  align-items:center;
+  padding:6px 9px;
+  border:1px solid var(--line);
+  background:#0e141d;
+  border-radius:999px;
+  font-size:12px
+}
+
+.legend b{
+  color:var(--o)
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<aside class="side">
+
+<div class="logo">
+F<span>O</span>RGE
+</div>
+
+<div class="role">
+Դիտում՝ <b id="roleName">Աշակերտ</b>
+</div>
+
+<div class="nav" id="nav">
+
+<button class="active" onclick="show('student')">
+🏠 Գլխավոր
+</button>
+
+<button onclick="show('leader')">
+🏆 Վարկանիշ
+</button>
+
+<button onclick="show('submissions')">
+📹 Հաշվետվություններ
+</button>
+
+<button onclick="show('people')">
+👥 Մասնակիցներ
+</button>
+
+<button onclick="show('admin')">
+⚙️ Կառավարում
+</button>
+
+<button onclick="show('profile')">
+👤 Իմ էջը
+</button>
+
+</div>
+
+<div class="account">
+
+<div class="person">
+
+<div class="avatar" id="sideAvatar">
+Գ
+</div>
+
+<div>
+<b>Գեղամ</b>
+<div class="muted" id="sideRole">
+Աշակերտ
+</div>
+</div>
+
+</div>
+
+</div>
+
+</aside>
+
+
+<main class="main">
+
+<div class="top">
+
+<div>
+
+<div class="muted">
+Ուրբաթ, 14 օգոստոս
+</div>
+
+<div class="title" id="pageTitle">
+Քո մրցահարթակը 🔥
+</div>
+
+</div>
+
+<div style="display:flex;gap:8px;align-items:center">
+
+<span class="legend">
+Մեծ տեքստ՝ <b>Միավորներ</b> · կարճ՝ <b>XP</b>
+</span>
+
+<button class="topbtn" onclick="switchRole()">
+🔄 Փոխել դերը
+</button>
+
+<button class="topbtn" onclick="toast('🔔 3 նոր ծանուցում')">
+🔔
+</button>
+
+</div>
+
+</div>
+
+
+<div id="student">
+
+<div class="grid">
+
+<div class="card">
+
+<div class="muted">
+ՔՈ ԴԻՐՔԸ
+</div>
+
+<div class="muted" style="margin-top:3px">
+Միավորներ
+</div>
+
+<div class="rank">
+#8
+<span class="green" style="font-size:18px">
+↑ 3
+</span>
+</div>
+
+<div class="muted">
+#7-ից՝ 55 XP
+</div>
+
+<div class="bar">
+<div class="fill"></div>
+</div>
+
+<b style="font-size:27px">
+1 840 XP
+</b>
+
+<span class="muted">
+ · Մակարդակ 12
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="muted">
+🔥 ԸՆԹԱՑԻԿ ՇԱՐՔ
+</div>
+
+<div class="rank">
+12
+<span style="font-size:20px">
+օր
+</span>
+</div>
+
+<div class="muted">
+Միավորներ՝ ամեն հաստատված կատարումից։
+Այսօր նույնպես կարող ես շարունակել։
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<span class="muted">Այսօր</span>
+<b>+120 XP</b>
+</div>
+
+<div class="stat">
+<span class="muted">Շաբաթ</span>
+<b>+540 XP</b>
+</div>
+
+<div class="stat">
+<span class="muted">Մեդալներ</span>
+<b>7</b>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<section class="section">
+
+<h2>
+⚡ Վարժություններ — առանց օրական սահմանափակման
+</h2>
+
+<div class="muted" style="margin:-5px 0 12px">
+Միավորներ են կուտակվում յուրաքանչյուր հաստատված կատարումից։
+</div>
+
+<div class="ex">
+
+
+<div class="card exercise">
+
+<div>
+
+<div class="icon">
+💪
+</div>
+
+<b>
+Հրում
+</b>
+
+<div class="muted">
+20 կրկնություն
+</div>
+
+<span class="tag">
++50 XP յուրաքանչյուր անգամ
+</span>
+
+</div>
+
+<button class="btn" onclick="openSubmit('Հրում',50)">
+📹 Ներկայացնել
+</button>
+
+</div>
+
+
+<div class="card exercise">
+
+<div>
+
+<div class="icon">
+🏃
+</div>
+
+<b>
+Վազք
+</b>
+
+<div class="muted">
+1 կմ
+</div>
+
+<span class="tag">
++100 XP յուրաքանչյուր անգամ
+</span>
+
+</div>
+
+<button class="btn" onclick="openSubmit('Վազք 1 կմ',100)">
+📹 Ներկայացնել
+</button>
+
+</div>
+
+
+<div class="card exercise">
+
+<div>
+
+<div class="icon">
+🧱
+</div>
+
+<b>
+Պլանկա
+</b>
+
+<div class="muted">
+2 րոպե
+</div>
+
+<span class="tag">
++70 XP յուրաքանչյուր անգամ
+</span>
+
+</div>
+
+<button class="btn" onclick="openSubmit('Պլանկա',70)">
+📹 Ներկայացնել
+</button>
+
+</div>
+
+
+<div class="card exercise">
+
+<div>
+
+<div class="icon">
+🦵
+</div>
+
+<b>
+Կքանիստ
+</b>
+
+<div class="muted">
+30 կրկնություն
+</div>
+
+<span class="tag">
++40 XP յուրաքանչյուր անգամ
+</span>
+
+</div>
+
+<button class="btn" onclick="openSubmit('Կքանիստ',40)">
+📹 Ներկայացնել
+</button>
+
+</div>
+
+
+</div>
+</section>
+
+
+<section class="section card">
+
+<h2>
+🏆 Խմբի վարկանիշ
+</h2>
+
+<table>
+<tbody id="board"></tbody>
+</table>
+
+</section>
+
+</div>
+
+
+<div id="leader" class="hidden card">
+
+<h2>
+🏆 Ամբողջական վարկանիշ
+</h2>
+
+<div class="muted">
+Միավորներ · XP-ը օգտագործվում է կարճ ձևաչափում
+</div>
+
+<p class="muted">
+Դպրոց → խումբ → անհատական արդյունքներ
+</p>
+
+<table>
+<tbody id="board2"></tbody>
+</table>
+
+</div>
+
+
+<div id="submissions" class="hidden card">
+
+<h2>
+📹 Հաշվետվությունների ստուգում
+</h2>
+
+<p class="muted">
+Մարզիչը կամ ադմինը կարող է դիտել ֆայլը և ընդունել/մերժել արդյունքը։
+</p>
+
+<div id="subList"></div>
+
+</div>
+
+
+<div id="people" class="hidden">
+
+<div class="card">
+
+<h2>
+👥 Մեր թիմը
+</h2>
+
+<p class="muted">
+Մասնակիցներ և մարզիչներ
+</p>
+
+<div class="people">
+
+
+<div class="card person">
+
+<div class="avatar">
+Գ
+</div>
+
+<div>
+<b>Գեղամ</b>
+<div class="muted">
+Աշակերտ · 1 840 XP
+</div>
+</div>
+
+</div>
+
+
+<div class="card person">
+
+<div class="avatar">
+Ա
+</div>
+
+<div>
+<b>Արման</b>
+<div class="muted">
+Գլխավոր մարզիչ · Ադմին
+</div>
+</div>
+
+</div>
+
+
+<div class="card person">
+
+<div class="avatar">
+Դ
+</div>
+
+<div>
+<b>Դավիթ</b>
+<div class="muted">
+Գլխավոր մարզիչ
+</div>
+</div>
+
+</div>
+
+
+<div class="card person">
+
+<div class="avatar">
+Ն
+</div>
+
+<div>
+<b>Նարեկ</b>
+<div class="muted">
+Մարզիչ · 1 980 XP
+</div>
+</div>
+
+</div>
+
+
+<div class="card person">
+
+<div class="avatar">
+Մ
+</div>
+
+<div>
+<b>Միքայել</b>
+<div class="muted">
+Աշակերտ · 1 930 XP
+</div>
+</div>
+
+</div>
+
+
+<div class="card person">
+
+<div class="avatar">
+Տ
+</div>
+
+<div>
+<b>Տիգրան</b>
+<div class="muted">
+Աշակերտ · 1 885 XP
+</div>
+</div>
+
+</div>
+
+
+</div>
+</div>
+</div>
+
+
+<div id="admin" class="hidden">
+
+<div class="card">
+
+<h2>
+⚙️ Կառավարում
+</h2>
+
+<p class="muted">
+Այս բաժինը հասանելի է միայն ադմինին։
+Այստեղից դու վերահսկում ես մրցաշարը։
+</p>
+
+
+<div class="adminrow">
+
+<div>
+
+<b>Գեղամ</b>
+
+<div class="muted">
+Ընթացիկ՝ 1 840 XP
+</div>
+
+</div>
+
+<div class="actions">
+
+<input id="points" type="number" value="100">
+
+<button class="btn" onclick="changeXP(1)">
++ Ավելացնել
+</button>
+
+<button class="btn reject" onclick="changeXP(-1)">
+− Հանել
+</button>
+
+<button class="btn purple" onclick="disqualify()">
+🚫 Դискվալիֆիկացնել
+</button>
+
+</div>
+
+</div>
+
+
+<div class="adminrow">
+
+<div>
+
+<b>Արմանի մարզիչ</b>
+
+<div class="muted">
+Կարգավիճակ՝ գլխավոր մարզիչ
+</div>
+
+</div>
+
+<button class="btn blue" onclick="toast('Մարզչի իրավունքները բացված են')">
+Կառավարել
+</button>
+
+</div>
+
+
+<div class="adminrow">
+
+<div>
+
+<b>Համակարգի պատմություն</b>
+
+<div class="muted">
+Յուրաքանչյուր փոփոխություն պահվում է՝ ով, երբ, ինչքան և ինչ պատճառով։
+</div>
+
+</div>
+
+<button class="btn" onclick="toast('📋 Գործողությունների մատյանը բացվեց')">
+Դիտել մատյանը
+</button>
+
+</div>
+
+
+</div>
+</div>
+
+
+<div id="profile" class="hidden card">
+
+<h2>
+👤 Իմ էջը
+</h2>
+
+<div class="person">
+
+<div class="avatar" id="bigAvatar">
+Գ
+</div>
+
+<div>
+
+<b>Գեղամ</b>
+
+<div class="muted">
+Աշակերտ · Մակարդակ 12
+</div>
+
+</div>
+
+</div>
+
+<hr style="border-color:var(--line);margin:20px 0">
+
+</div>
+
+
+</main>
+</div>
+
+
+<div class="modal" id="submitModal">
+
+<div class="box">
+
+<h2 id="submitTitle">
+Արդյունքի ներկայացում
+</h2>
+
+<p class="muted">
+Напиши комментарий о выполнении задания.
+</p>
+
+<textarea placeholder="Մեկնաբանություն մարզչին"></textarea>
+
+<div style="display:flex;gap:8px;justify-content:flex-end">
+
+<button class="topbtn" onclick="closeSubmit()">
+Չեղարկել
+</button>
+
+<button class="btn" onclick="sendSubmission()">
+Ուղարկել մարզչին
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+
+let xp=1840,
+currentTask='',
+points=0,
+role=0;
+
+const roles=[
+'Աշակերտ',
+'Մարզիչ',
+'Ադմին'
+];
+
+const people=[
+['Արման',2450,'↑'],
+['Դավիթ',2310,'↑'],
+['Արամ',2040,'↑'],
+['Նարեկ',1980,'↓'],
+['Միքայել',1930,'↑'],
+['Տիգրան',1885,'↑'],
+['Արթուր',1895,'↓'],
+['Գեղամ',1840,'↑'],
+['Սամվել',1810,'↓'],
+['Վահագն',1760,'↑']
+];
+
+let submissions=[
+['Գեղամ','Հրում','+50 XP'],
+['Միքայել','Վազք 1 կմ','+100 XP'],
+['Տիգրան','Պլանկա','+70 XP']
+];
+
+
+function renderBoard(){
+
+  let arr=people.map(x=>[...x]);
+
+  arr[7][1]=xp;
+
+  arr.sort((a,b)=>b[1]-a[1]);
+
+  let h=arr.map((x,i)=>`
+
+<tr class="${x[0]=='Գեղամ'?'me':''}">
+
+<td>
+<b>${i+1}</b>
+</td>
+
+<td>
+<b>${x[0]}</b>
+</td>
+
+<td style="text-align:right">
+<b>${x[1].toLocaleString()}</b> XP
+</td>
+
+<td class="${x[2]=='↑'?'green':'red'}">
+${x[2]}
+</td>
+
+</tr>
+
+`).join('');
+
+  document.getElementById('board').innerHTML=h;
+
+  document.getElementById('board2').innerHTML=h;
+}
+
+
+function show(id){
+
+  [
+    'student',
+    'leader',
+    'submissions',
+    'people',
+    'admin',
+    'profile'
+  ].forEach(
+    x=>
+      document.getElementById(x)
+      .classList.toggle('hidden',x!=id)
+  );
+
+  document.getElementById('pageTitle').textContent={
+    student:'Քո մրցահարթակը 🔥',
+    leader:'🏆 Վարկանիշ',
+    submissions:'📹 Հաշվետվություններ',
+    people:'👥 Մասնակիցներ',
+    admin:'⚙️ Կառավարում',
+    profile:'👤 Իմ էջը'
+  }[id];
+
+  if(id==='submissions')
+    renderSubs();
+}
+
+
+function switchRole(){
+
+  role=(role+1)%3;
+
+  document.getElementById('roleName').textContent=roles[role];
+
+  document.getElementById('sideRole').textContent=roles[role];
+
+  toast('Դիտում՝ '+roles[role]);
+
+  if(role===2)
+    show('admin');
+
+  else if(role===1)
+    show('submissions');
+
+  else
+    show('student');
+}
+
+
+function openSubmit(n,p){
+
+  currentTask=n;
+
+  points=p;
+
+  document.getElementById('submitTitle').textContent=
+    n+' · +'+p+' XP';
+
+  document
+    .getElementById('submitModal')
+    .classList
+    .add('show');
+}
+
+
+function closeSubmit(){
+
+  document
+    .getElementById('submitModal')
+    .classList
+    .remove('show');
+}
+
+
+function sendSubmission(){
+
+  closeSubmit();
+
+  submissions.unshift([
+    'Գեղամ',
+    currentTask,
+    '+'+points+' XP'
+  ]);
+
+  toast('✓ Հաշվետվությունը ուղարկվեց մարզչին');
+}
+
+
+function renderSubs(){
+
+  document.getElementById('subList').innerHTML=
+    submissions.map((s,i)=>`
+
+<div class="submission">
+
+<div class="thumb">
+✓
+</div>
+
+<div>
+
+<b>
+${s[0]} · ${s[1]}
+</b>
+
+<div class="muted">
+${s[2]} · սպասում է ստուգման
+</div>
+
+</div>
+
+<div class="actions">
+
+<button class="btn accept" onclick="accept(${i})">
+✓ Ընդունել
+</button>
+
+<button class="btn reject" onclick="reject(${i})">
+✕ Մերժել
+</button>
+
+</div>
+
+</div>
+
+`).join('');
+}
+
+
+function accept(i){
+
+  toast('✅ Արդյունքը հաստատվեց և XP-ն ավելացվեց');
+
+  submissions.splice(i,1);
+
+  renderSubs();
+
+  renderBoard();
+}
+
+
+function reject(i){
+
+  toast('❌ Արդյունքը մերժվեց');
+
+  submissions.splice(i,1);
+
+  renderSubs();
+}
+
+
+function changeXP(sign){
+
+  let n=Math.abs(
+    parseInt(
+      document.getElementById('points').value
+    )||0
+  );
+
+  xp=Math.max(
+    0,
+    xp+sign*n
+  );
+
+  renderBoard();
+
+  toast(
+    (sign>0?'➕ ':'➖ ')+
+    n+
+    ' XP · փոփոխությունը պահպանվեց'
+  );
+}
+
+
+function disqualify(){
+
+  toast(
+    '🚫 Գեղամը դիսկվալիֆիկացված է (demo)'
+  );
+}
+
+
+function toast(t){
+
+  let x=document.getElementById('toast');
+
+  x.textContent=t;
+
+  x.classList.add('show');
+
+  setTimeout(
+    ()=>x.classList.remove('show'),
+    2600
+  );
+}
+
+
+renderBoard();
+
+</script>
+
+</body>
+</html>
