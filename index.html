@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Tarantula</title>
+<title>Forge</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -19,10 +19,12 @@
   --r:#ff4e68;
   --b:#5c8cff;
   --g:#43d991;
-  --v:#a978ff
+  --v:#a978ff;
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
@@ -31,16 +33,27 @@ body{
     radial-gradient(circle at 0 35%,#10264e,transparent 30%),
     var(--bg);
   color:var(--t);
-  font:15px system-ui,"Noto Sans Armenian",sans-serif
+  font:15px system-ui,"Noto Sans Armenian",sans-serif;
+}
+
+button,
+input,
+textarea,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
 }
 
 .hidden{
-  display:none!important
+  display:none!important;
 }
 
 .app{
   display:flex;
-  min-height:100vh
+  min-height:100vh;
 }
 
 .side{
@@ -50,27 +63,28 @@ body{
   padding:20px 14px;
   position:sticky;
   top:0;
-  height:100vh
+  height:100vh;
+  flex-shrink:0;
 }
 
 .logo{
   font-size:25px;
   font-weight:950;
   letter-spacing:4px;
-  padding:5px 10px 20px
+  padding:5px 10px 20px;
 }
 
 .logo span{
-  color:var(--o)
+  color:var(--o);
 }
 
-.role{
+.rolebox{
   margin:0 7px 15px;
   padding:10px;
   border:1px solid var(--line);
   border-radius:12px;
   background:var(--p);
-  font-size:12px
+  font-size:12px;
 }
 
 .nav button{
@@ -82,13 +96,12 @@ body{
   text-align:left;
   border-radius:11px;
   margin:2px 0;
-  cursor:pointer
 }
 
 .nav button:hover,
 .nav button.active{
   background:var(--p2);
-  color:#fff
+  color:#fff;
 }
 
 .account{
@@ -99,25 +112,14 @@ body{
   border:1px solid var(--line);
   background:var(--p);
   padding:11px;
-  border-radius:13px
-}
-
-.avatar{
-  width:38px;
-  height:38px;
-  border-radius:50%;
-  object-fit:cover;
-  background:linear-gradient(135deg,var(--o),var(--r));
-  display:grid;
-  place-items:center;
-  font-weight:900
+  border-radius:13px;
 }
 
 .main{
   width:100%;
   max-width:1450px;
   margin:auto;
-  padding:27px
+  padding:27px;
 }
 
 .top{
@@ -125,60 +127,62 @@ body{
   justify-content:space-between;
   align-items:center;
   margin-bottom:22px;
-  gap:15px
+  gap:15px;
 }
 
 .title{
   font-size:28px;
-  font-weight:900
+  font-weight:900;
 }
 
 .muted{
-  color:var(--m)
+  color:var(--m);
 }
 
 .topbtn,
 .btn{
   border:1px solid var(--line);
   border-radius:10px;
-  padding:10px 12px;
+  padding:10px 13px;
   color:#fff;
   cursor:pointer;
-  background:var(--p)
+  background:var(--p);
 }
 
 .btn{
   background:linear-gradient(90deg,var(--o),var(--r));
   border:0;
-  font-weight:850
+  font-weight:850;
 }
 
-.btn:hover{
-  transform:translateY(-1px)
+.btn:hover,
+.topbtn:hover{
+  transform:translateY(-1px);
+}
+
+.btn:disabled,
+.topbtn:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+  transform:none;
 }
 
 .blue{
-  background:var(--b)
+  background:var(--b);
 }
 
-.accept{
+.greenbtn{
   background:var(--g);
-  color:#07140e
+  color:#07140e;
 }
 
-.reject{
-  background:var(--r)
+.redbtn{
+  background:var(--r);
 }
 
 .purple{
   background:var(--v);
-  color:#100b1b
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:1.4fr 1fr;
-  gap:15px
+  color:#100b1b;
 }
 
 .card{
@@ -186,14 +190,20 @@ body{
   border:1px solid var(--line);
   border-radius:18px;
   padding:19px;
-  box-shadow:0 15px 50px #0004
+  box-shadow:0 15px 50px #0004;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1.4fr 1fr;
+  gap:15px;
 }
 
 .rank{
   font-size:55px;
   font-weight:950;
   line-height:1;
-  margin:7px 0
+  margin:7px 0;
 }
 
 .bar{
@@ -201,124 +211,172 @@ body{
   background:#252d39;
   border-radius:20px;
   overflow:hidden;
-  margin:13px 0
+  margin:13px 0;
 }
 
 .fill{
   height:100%;
-  background:linear-gradient(90deg,var(--o),var(--r),var(--v))
+  background:linear-gradient(90deg,var(--o),var(--r),var(--v));
 }
 
 .stats{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:9px;
-  margin-top:15px
+  margin-top:15px;
 }
 
 .stat{
   padding:12px;
   background:#0e141d;
   border:1px solid var(--line);
-  border-radius:12px
+  border-radius:12px;
 }
 
 .stat b{
   display:block;
-  font-size:21px
+  font-size:21px;
 }
 
 .section{
-  margin-top:19px
+  margin-top:19px;
 }
 
 .section h2{
   font-size:18px;
-  margin:0 0 12px
+  margin:0 0 12px;
 }
 
 .ex{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:11px
+  gap:11px;
 }
 
 .exercise{
-  min-height:175px;
+  min-height:180px;
   display:flex;
   flex-direction:column;
-  justify-content:space-between
+  justify-content:space-between;
 }
 
 .icon{
-  font-size:27px
+  font-size:27px;
+  margin-bottom:7px;
 }
 
-.tag,
-.legend{
+.tag{
   display:inline-flex;
   background:#202735;
   padding:5px 8px;
   border-radius:999px;
-  font-size:12px
-}
-
-.legend{
-  gap:7px;
-  align-items:center;
-  border:1px solid var(--line);
-  background:#0e141d
-}
-
-.legend b{
-  color:var(--o)
+  font-size:12px;
+  margin-top:8px;
 }
 
 table{
   width:100%;
-  border-collapse:collapse
+  border-collapse:collapse;
 }
 
 td{
   padding:12px 7px;
-  border-bottom:1px solid #232b36
+  border-bottom:1px solid #232b36;
 }
 
 .me{
-  background:#18202c
+  background:#18202c;
 }
 
 .green{
-  color:var(--g)
+  color:var(--g);
 }
 
 .red{
-  color:var(--r)
+  color:var(--r);
 }
 
-.submission{
+.people{
   display:grid;
-  grid-template-columns:80px 1fr auto;
-  gap:14px;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.person{
+  display:flex;
   align-items:center;
-  border-bottom:1px solid var(--line);
-  padding:14px 0
+  gap:11px;
 }
 
-.thumb{
-  width:70px;
-  height:55px;
-  border-radius:10px;
-  background:#0e141d;
-  border:1px solid var(--line);
+.avatar{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  object-fit:cover;
+  background:linear-gradient(135deg,var(--o),var(--r));
   display:grid;
-  place-items:center
+  place-items:center;
+  font-weight:900;
+  overflow:hidden;
+  flex-shrink:0;
+}
+
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.bigavatar{
+  width:100px;
+  height:100px;
+  font-size:30px;
+}
+
+.formgrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.field{
+  margin-bottom:13px;
+}
+
+.field label{
+  display:block;
+  margin-bottom:6px;
+  color:#c6ceda;
+  font-size:13px;
+}
+
+.input,
+.textarea,
+.select{
+  width:100%;
+  background:#090e15;
+  color:#fff;
+  border:1px solid var(--line);
+  padding:11px 12px;
+  border-radius:9px;
+  outline:none;
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus{
+  border-color:var(--b);
+}
+
+.textarea{
+  min-height:100px;
+  resize:vertical;
 }
 
 .actions{
   display:flex;
-  gap:7px;
-  flex-wrap:wrap
+  gap:8px;
+  flex-wrap:wrap;
 }
 
 .adminrow{
@@ -327,28 +385,56 @@ td{
   gap:12px;
   padding:13px 0;
   border-bottom:1px solid var(--line);
-  align-items:center
-}
-
-.adminrow input{
-  width:110px;
-  background:#0a0f16;
-  color:#fff;
-  border:1px solid var(--line);
-  border-radius:8px;
-  padding:9px
-}
-
-.people{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px
-}
-
-.person{
-  display:flex;
   align-items:center;
-  gap:11px
+}
+
+.admincontrols{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+.smallinput{
+  width:100px;
+}
+
+.notification{
+  border:1px solid var(--line);
+  background:#0e141d;
+  border-radius:13px;
+  padding:13px;
+  margin-bottom:9px;
+}
+
+.notification.unread{
+  border-color:#5c8cff88;
+  background:#111c31;
+}
+
+.notificationhead{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.notificationtime{
+  font-size:12px;
+  color:var(--m);
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:20px;
+  height:20px;
+  padding:0 6px;
+  border-radius:999px;
+  background:var(--r);
+  color:#fff;
+  font-size:11px;
+  font-weight:900;
 }
 
 .modal{
@@ -359,42 +445,29 @@ td{
   align-items:center;
   justify-content:center;
   padding:20px;
-  z-index:20
+  z-index:100;
 }
 
 .modal.show{
-  display:flex
+  display:flex;
 }
 
 .box{
-  max-width:600px;
+  max-width:620px;
   width:100%;
+  max-height:90vh;
+  overflow:auto;
   background:#121925;
   border:1px solid var(--line);
   border-radius:18px;
-  padding:21px
-}
-
-.box input,
-.box textarea{
-  width:100%;
-  background:#090e15;
-  color:#fff;
-  border:1px solid var(--line);
-  padding:11px;
-  border-radius:9px;
-  margin:7px 0 12px
-}
-
-.box textarea{
-  min-height:110px;
-  resize:vertical
+  padding:21px;
 }
 
 .toast{
   position:fixed;
   right:20px;
   bottom:20px;
+  max-width:380px;
   background:#1a2230;
   border:1px solid #394557;
   padding:14px 16px;
@@ -402,105 +475,135 @@ td{
   transform:translateY(120px);
   opacity:0;
   transition:.3s;
-  z-index:30
+  z-index:200;
 }
 
 .toast.show{
   transform:none;
-  opacity:1
+  opacity:1;
 }
 
 .auth{
   min-height:100vh;
   display:grid;
   place-items:center;
-  padding:20px
+  padding:20px;
 }
 
 .authbox{
-  width:min(460px,100%);
+  width:min(470px,100%);
   background:linear-gradient(145deg,#141b27,#10151e);
   border:1px solid var(--line);
   border-radius:20px;
-  padding:25px
+  padding:25px;
 }
 
-.authbox input{
-  width:100%;
-  background:#090e15;
-  color:#fff;
+.authbox .logo{
+  padding-left:0;
+}
+
+.setup{
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  padding:20px;
+}
+
+.setupbox{
+  width:min(620px,100%);
+  background:linear-gradient(145deg,#141b27,#10151e);
   border:1px solid var(--line);
-  padding:12px;
-  border-radius:9px;
-  margin:7px 0 12px
+  border-radius:20px;
+  padding:25px;
+}
+
+.avatarupload{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  padding:15px;
+  border:1px dashed var(--line);
+  border-radius:14px;
+  margin-bottom:15px;
+}
+
+.empty{
+  padding:25px;
+  text-align:center;
+  color:var(--m);
+  border:1px dashed var(--line);
+  border-radius:14px;
+}
+
+hr{
+  border:0;
+  border-top:1px solid var(--line);
 }
 
 @media(max-width:1000px){
 
   .side{
-    width:72px
+    width:72px;
   }
 
   .logo{
-    font-size:15px
+    font-size:15px;
   }
 
   .nav button{
-    font-size:0
+    font-size:0;
+    text-align:center;
   }
 
   .nav button:before{
     content:"◆";
-    font-size:12px
+    font-size:12px;
   }
 
-  .role,
+  .rolebox,
   .account{
-    display:none
+    display:none;
   }
 
   .grid{
-    grid-template-columns:1fr
+    grid-template-columns:1fr;
   }
 
   .ex{
-    grid-template-columns:repeat(2,1fr)
+    grid-template-columns:repeat(2,1fr);
   }
 
   .people{
-    grid-template-columns:1fr 1fr
+    grid-template-columns:1fr 1fr;
   }
 }
 
 @media(max-width:650px){
 
   .side{
-    display:none
+    display:none;
   }
 
   .main{
-    padding:16px
+    padding:16px;
   }
 
   .ex,
-  .people{
-    grid-template-columns:1fr
+  .people,
+  .formgrid{
+    grid-template-columns:1fr;
   }
 
-  .submission{
-    grid-template-columns:70px 1fr
+  .stats{
+    grid-template-columns:1fr;
   }
 
-  .actions{
-    grid-column:1/-1
+  .adminrow{
+    grid-template-columns:1fr;
   }
 
   .top{
-    align-items:flex-start
-  }
-
-  .legend{
-    display:none
+    align-items:flex-start;
   }
 }
 </style>
@@ -508,558 +611,930 @@ td{
 
 <body>
 
+<!-- AUTH -->
+
 <div id="auth" class="auth">
 
-<div class="authbox">
+  <div class="authbox">
 
-<div class="logo">
-F<span>O</span>RGE
+    <div class="logo">
+      F<span>O</span>RGE
+    </div>
+
+    <h2 id="authTitle">Մուտք</h2>
+
+    <p class="muted" id="authText">
+      Մուտք գործիր քո հաշիվ
+    </p>
+
+    <div id="signupFields" class="hidden">
+
+      <div class="field">
+        <label>Անուն Ազգանուն</label>
+        <input
+          id="authName"
+          class="input"
+          placeholder="Օրինակ՝ Գեղամ Սարգսյան"
+        >
+      </div>
+
+      <div class="field">
+        <label>Username</label>
+        <input
+          id="authUsername"
+          class="input"
+          placeholder="Օրինակ՝ gegham08"
+        >
+      </div>
+
+    </div>
+
+    <div class="field">
+      <label>Email</label>
+      <input
+        id="authEmail"
+        type="email"
+        class="input"
+        placeholder="Email"
+      >
+    </div>
+
+    <div class="field">
+      <label>Գաղտնաբառ</label>
+      <input
+        id="authPassword"
+        type="password"
+        class="input"
+        placeholder="Գաղտնաբառ"
+      >
+    </div>
+
+    <button
+      class="btn"
+      style="width:100%"
+      onclick="submitAuth()"
+      id="authSubmit"
+    >
+      Մուտք գործել
+    </button>
+
+    <button
+      class="topbtn"
+      style="width:100%;margin-top:8px"
+      onclick="toggleAuth()"
+      id="authToggle"
+    >
+      Նոր հաշիվ ստեղծել
+    </button>
+
+    <div
+      class="muted"
+      style="margin-top:12px;font-size:12px"
+    >
+      Տվյալները պահվում են Supabase-ում։
+    </div>
+
+  </div>
+
 </div>
 
-<h2 id="authTitle">
-Մուտք
-</h2>
 
-<p class="muted" id="authText">
-Մուտք գործիր քո հաշիվ
-</p>
+<!-- PROFILE SETUP -->
 
-<input
-id="authName"
-class="hidden"
-placeholder="Անուն Ազգանուն"
->
+<div id="setup" class="setup hidden">
 
-<input
-id="authEmail"
-type="email"
-placeholder="Email"
->
+  <div class="setupbox">
 
-<input
-id="authPassword"
-type="password"
-placeholder="Գաղտնաբառ"
->
+    <div class="logo">
+      F<span>O</span>RGE
+    </div>
 
-<button
-class="btn"
-style="width:100%"
-onclick="submitAuth()"
-id="authSubmit"
->
-Մուտք գործել
-</button>
+    <h2>Կարգավորիր քո պրոֆիլը</h2>
 
-<button
-class="topbtn"
-style="width:100%;margin-top:8px"
-onclick="toggleAuth()"
-id="authToggle"
->
-Նոր հաշիվ ստեղծել
-</button>
+    <p class="muted">
+      Առաջին մուտքից առաջ ընտրիր անունդ, username-ը և պարտադիր ավելացրու ավատար։
+    </p>
 
-<div class="muted" style="margin-top:12px;font-size:12px">
-Տվյալները պահվում են Supabase-ում։
+    <div class="formgrid">
+
+      <div class="field">
+        <label>Անուն Ազգանուն</label>
+        <input
+          id="setupName"
+          class="input"
+        >
+      </div>
+
+      <div class="field">
+        <label>Username</label>
+        <input
+          id="setupUsername"
+          class="input"
+          placeholder="username"
+        >
+      </div>
+
+    </div>
+
+    <div class="avatarupload">
+
+      <div
+        class="avatar bigavatar"
+        id="setupAvatarPreview"
+      >
+        Գ
+      </div>
+
+      <div style="flex:1">
+
+        <b>Ավատար</b>
+
+        <div
+          class="muted"
+          style="margin:4px 0 10px"
+        >
+          Ավելացրու քո նկարը։
+        </div>
+
+        <input
+          id="setupAvatar"
+          type="file"
+          accept="image/png,image/jpeg,image/webp"
+          class="input"
+        >
+
+      </div>
+
+    </div>
+
+    <button
+      class="btn"
+      style="width:100%"
+      onclick="saveInitialProfile()"
+      id="setupSave"
+    >
+      Պահպանել պրոֆիլը
+    </button>
+
+  </div>
+
 </div>
 
-</div>
 
-</div>
-
+<!-- APP -->
 
 <div id="app" class="app hidden">
 
-<aside class="side">
+  <aside class="side">
 
-<div class="logo">
-F<span>O</span>RGE
+    <div class="logo">
+      F<span>O</span>RGE
+    </div>
+
+    <div class="rolebox">
+      Դեր՝ <b id="roleName">Աշակերտ</b>
+    </div>
+
+    <div class="nav">
+
+      <button
+        data-page="home"
+        class="active"
+        onclick="showPage('home')"
+      >
+        🏠 Գլխավոր
+      </button>
+
+      <button
+        data-page="leaderboard"
+        onclick="showPage('leaderboard')"
+      >
+        🏆 Վարկանիշ
+      </button>
+
+      <button
+        data-page="exercises"
+        onclick="showPage('exercises')"
+      >
+        💪 Վարժություններ
+      </button>
+
+      <button
+        data-page="people"
+        onclick="showPage('people')"
+      >
+        👥 Մասնակիցներ
+      </button>
+
+      <button
+        data-page="trainer"
+        id="navTrainer"
+        class="hidden"
+        onclick="showPage('trainer')"
+      >
+        🏋️ Մարզիչ
+      </button>
+
+      <button
+        data-page="admin"
+        id="navAdmin"
+        class="hidden"
+        onclick="showPage('admin')"
+      >
+        ⚙️ Կառավարում
+      </button>
+
+      <button
+        data-page="notifications"
+        onclick="showPage('notifications')"
+      >
+        🔔 Ծանուցումներ
+        <span
+          id="navBadge"
+          class="badge hidden"
+        >0</span>
+      </button>
+
+      <button
+        data-page="profile"
+        onclick="showPage('profile')"
+      >
+        👤 Իմ էջը
+      </button>
+
+      <button onclick="logout()">
+        🚪 Ելք
+      </button>
+
+    </div>
+
+    <div class="account">
+
+      <div class="person">
+
+        <div
+          class="avatar"
+          id="sideAvatar"
+        >
+          Գ
+        </div>
+
+        <div>
+
+          <b id="sideName">
+            Օգտատեր
+          </b>
+
+          <div
+            class="muted"
+            id="sideUsername"
+          >
+            @username
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </aside>
+
+
+  <main class="main">
+
+    <div class="top">
+
+      <div>
+
+        <div
+          class="muted"
+          id="dateText"
+        ></div>
+
+        <div
+          class="title"
+          id="pageTitle"
+        >
+          Քո մրցահարթակը 🔥
+        </div>
+
+      </div>
+
+      <div style="display:flex;gap:8px;align-items:center">
+
+        <button
+          class="topbtn"
+          onclick="loadAll()"
+        >
+          ↻ Թարմացնել
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- HOME -->
+
+    <section id="page-home">
+
+      <div class="grid">
+
+        <div class="card">
+
+          <div class="muted">
+            ՔՈ ԴԻՐՔԸ
+          </div>
+
+          <div class="rank" id="myRank">
+            —
+          </div>
+
+          <div
+            class="muted"
+            id="rankGap"
+          >
+            Վարկանիշը հաշվարկվում է
+          </div>
+
+          <div class="bar">
+            <div
+              class="fill"
+              id="levelFill"
+              style="width:0%"
+            ></div>
+          </div>
+
+          <b
+            style="font-size:27px"
+            id="myXP"
+          >
+            0 XP
+          </b>
+
+          <span
+            class="muted"
+            id="myLevel"
+          >
+            · Մակարդակ 1
+          </span>
+
+        </div>
+
+
+        <div class="card">
+
+          <div class="muted">
+            👋 Բարի գալուստ
+          </div>
+
+          <h2 id="welcomeName">
+            Օգտատեր
+          </h2>
+
+          <div class="stats">
+
+            <div class="stat">
+              <span class="muted">
+                Այսօր
+              </span>
+              <b id="todayXP">
+                0 XP
+              </b>
+            </div>
+
+            <div class="stat">
+              <span class="muted">
+                Շաբաթ
+              </span>
+              <b id="weekXP">
+                0 XP
+              </b>
+            </div>
+
+            <div class="stat">
+              <span class="muted">
+                Level
+              </span>
+              <b id="homeLevel">
+                1
+              </b>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <section class="section card">
+
+        <h2>
+          ⚡ Արագ գործողություններ
+        </h2>
+
+        <div class="actions">
+
+          <button
+            class="btn"
+            onclick="showPage('exercises')"
+          >
+            💪 Վարժություններ
+          </button>
+
+          <button
+            class="topbtn"
+            onclick="showPage('leaderboard')"
+          >
+            🏆 Վարկանիշ
+          </button>
+
+          <button
+            class="topbtn"
+            onclick="showPage('notifications')"
+          >
+            🔔 Ծանուցումներ
+          </button>
+
+          <button
+            class="topbtn"
+            onclick="showPage('profile')"
+          >
+            👤 Պրոֆիլ
+          </button>
+
+        </div>
+
+      </section>
+
+    </section>
+
+
+    <!-- LEADERBOARD -->
+
+    <section
+      id="page-leaderboard"
+      class="hidden card"
+    >
+
+      <h2>
+        🏆 Վարկանիշ
+      </h2>
+
+      <p class="muted">
+        Բոլոր մասնակիցները՝ ըստ XP։
+      </p>
+
+      <table>
+        <tbody id="leaderboardBody"></tbody>
+      </table>
+
+    </section>
+
+
+    <!-- EXERCISES -->
+
+    <section
+      id="page-exercises"
+      class="hidden"
+    >
+
+      <div class="card">
+
+        <h2>
+          💪 Վարժություններ
+        </h2>
+
+        <p class="muted">
+          Այստեղ հասանելի են քո վարժությունները։
+        </p>
+
+      </div>
+
+      <div
+        class="ex section"
+        id="exerciseList"
+      ></div>
+
+    </section>
+
+
+    <!-- PEOPLE -->
+
+    <section
+      id="page-people"
+      class="hidden"
+    >
+
+      <div class="card">
+
+        <h2>
+          👥 Մասնակիցներ
+        </h2>
+
+        <div
+          class="people"
+          id="peopleList"
+        ></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- TRAINER -->
+
+    <section
+      id="page-trainer"
+      class="hidden"
+    >
+
+      <div class="card">
+
+        <h2>
+          🏋️ Մարզչի վահանակ
+        </h2>
+
+        <p class="muted">
+          Այստեղ մարզիչը կառավարում է իր խմբի աշխատանքը։
+        </p>
+
+      </div>
+
+      <div class="grid section">
+
+        <div class="card">
+
+          <h3>
+            👥 Իմ աշակերտները
+          </h3>
+
+          <div id="trainerStudents"></div>
+
+        </div>
+
+        <div class="card">
+
+          <h3>
+            🔔 Ուղարկել ծանուցում
+          </h3>
+
+          <div class="field">
+
+            <label>
+              Ում
+            </label>
+
+            <select
+              id="trainerRecipient"
+              class="select"
+            ></select>
+
+          </div>
+
+          <div class="field">
+
+            <label>
+              Վերնագիր
+            </label>
+
+            <input
+              id="trainerNotificationTitle"
+              class="input"
+              placeholder="Օրինակ՝ Այսօրվա մարզում"
+            >
+
+          </div>
+
+          <div class="field">
+
+            <label>
+              Հաղորդագրություն
+            </label>
+
+            <textarea
+              id="trainerNotificationMessage"
+              class="textarea"
+              placeholder="Գրիր հաղորդագրությունը..."
+            ></textarea>
+
+          </div>
+
+          <button
+            class="btn"
+            onclick="sendTrainerNotification()"
+          >
+            Ուղարկել
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ADMIN -->
+
+    <section
+      id="page-admin"
+      class="hidden"
+    >
+
+      <div class="card">
+
+        <h2>
+          ⚙️ Կառավարում
+        </h2>
+
+        <p class="muted">
+          Միայն ադմինիստրատորի համար։
+        </p>
+
+        <div id="adminUsers"></div>
+
+      </div>
+
+      <div class="grid section">
+
+        <div class="card">
+
+          <h3>
+            🔔 Ծանուցում
+          </h3>
+
+          <div class="field">
+
+            <label>
+              Ում
+            </label>
+
+            <select
+              id="adminRecipient"
+              class="select"
+            ></select>
+
+          </div>
+
+          <div class="field">
+
+            <label>
+              Վերնագիր
+            </label>
+
+            <input
+              id="adminNotificationTitle"
+              class="input"
+              placeholder="Վերնագիր"
+            >
+
+          </div>
+
+          <div class="field">
+
+            <label>
+              Հաղորդագրություն
+            </label>
+
+            <textarea
+              id="adminNotificationMessage"
+              class="textarea"
+              placeholder="Հաղորդագրություն..."
+            ></textarea>
+
+          </div>
+
+          <button
+            class="btn"
+            onclick="sendAdminNotification()"
+          >
+            Ուղարկել
+          </button>
+
+        </div>
+
+        <div class="card">
+
+          <h3>
+            📋 Գործողությունների պատմություն
+          </h3>
+
+          <div id="activityList"></div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- NOTIFICATIONS -->
+
+    <section
+      id="page-notifications"
+      class="hidden card"
+    >
+
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+
+        <div>
+
+          <h2>
+            🔔 Ծանուցումներ
+          </h2>
+
+          <p class="muted">
+            Քո անձնական ծանուցումները։
+          </p>
+
+        </div>
+
+        <button
+          class="topbtn"
+          onclick="markAllNotificationsRead()"
+        >
+          ✓ Կարդալ բոլորը
+        </button>
+
+      </div>
+
+      <div id="notificationList"></div>
+
+    </section>
+
+
+    <!-- PROFILE -->
+
+    <section
+      id="page-profile"
+      class="hidden card"
+    >
+
+      <h2>
+        👤 Իմ էջը
+      </h2>
+
+      <div
+        class="person"
+        style="margin:20px 0"
+      >
+
+        <div
+          class="avatar bigavatar"
+          id="profileAvatar"
+        >
+          Գ
+        </div>
+
+        <div>
+
+          <h2
+            id="profileName"
+            style="margin:0"
+          >
+            Օգտատեր
+          </h2>
+
+          <div
+            class="muted"
+            id="profileUsername"
+          >
+            @username
+          </div>
+
+          <div
+            class="muted"
+            id="profileRole"
+          >
+            Աշակերտ
+          </div>
+
+          <div
+            class="muted"
+            id="profileEmail"
+          ></div>
+
+        </div>
+
+      </div>
+
+      <hr>
+
+      <div class="formgrid">
+
+        <div class="field">
+
+          <label>
+            Անուն Ազգանուն
+          </label>
+
+          <input
+            id="profileEditName"
+            class="input"
+          >
+
+        </div>
+
+        <div class="field">
+
+          <label>
+            Username
+          </label>
+
+          <input
+            id="profileEditUsername"
+            class="input"
+          >
+
+        </div>
+
+      </div>
+
+      <div class="avatarupload">
+
+        <div
+          class="avatar bigavatar"
+          id="profileEditAvatarPreview"
+        >
+          Գ
+        </div>
+
+        <div style="flex:1">
+
+          <b>
+            Փոխել ավատարը
+          </b>
+
+          <div
+            class="muted"
+            style="margin:4px 0 10px"
+          >
+            PNG, JPG կամ WEBP
+          </div>
+
+          <input
+            id="profileAvatarFile"
+            type="file"
+            accept="image/png,image/jpeg,image/webp"
+            class="input"
+          >
+
+        </div>
+
+      </div>
+
+      <button
+        class="btn"
+        onclick="saveProfile()"
+        id="profileSave"
+      >
+        Պահպանել փոփոխությունները
+      </button>
+
+      <div class="stats">
+
+        <div class="stat">
+          <span class="muted">
+            XP
+          </span>
+          <b id="profileXP">
+            0
+          </b>
+        </div>
+
+        <div class="stat">
+          <span class="muted">
+            Level
+          </span>
+          <b id="profileLevel">
+            1
+          </b>
+        </div>
+
+        <div class="stat">
+          <span class="muted">
+            Դեր
+          </span>
+          <b id="profileRole2">
+            student
+          </b>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
 </div>
 
-<div class="role">
-Դեր՝ <b id="roleName">Աշակերտ</b>
-</div>
 
-<div class="nav">
-
-<button
-data-page="student"
-class="active"
-onclick="show('student')"
->
-🏠 Գլխավոր
-</button>
-
-<button
-data-page="leader"
-onclick="show('leader')"
->
-🏆 Վարկանիշ
-</button>
-
-<button
-data-page="submissions"
-id="navSub"
-onclick="show('submissions')"
->
-📹 Հաշվետվություններ
-</button>
-
-<button
-data-page="people"
-onclick="show('people')"
->
-👥 Մասնակիցներ
-</button>
-
-<button
-data-page="admin"
-id="navAdmin"
-class="hidden"
-onclick="show('admin')"
->
-⚙️ Կառավարում
-</button>
-
-<button
-data-page="profile"
-onclick="show('profile')"
->
-👤 Իմ էջը
-</button>
-
-<button onclick="logout()">
-🚪 Ելք
-</button>
-
-</div>
-
-
-<div class="account">
-
-<div class="person">
-
-<div class="avatar" id="sideAvatar">
-Գ
-</div>
-
-<div>
-
-<b id="sideName">
-Օգտատեր
-</b>
-
-<div class="muted" id="sideRole">
-Աշակերտ
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</aside>
-
-
-<main class="main">
-
-<div class="top">
-
-<div>
-
-<div class="muted" id="dateText"></div>
-
-<div class="title" id="pageTitle">
-Քո մրցահարթակը 🔥
-</div>
-
-</div>
-
-<div style="display:flex;gap:8px;align-items:center">
-
-<span class="legend">
-XP-ը պահվում է բազայում
-</span>
-
-<button
-class="topbtn"
-onclick="loadAll()"
->
-↻ Թարմացնել
-</button>
-
-</div>
-
-</div>
-
-
-<div id="student">
-
-<div class="grid">
-
-<div class="card">
-
-<div class="muted">
-ՔՈ ԴԻՐՔԸ
-</div>
-
-<div class="muted">
-Միավորներ
-</div>
-
-<div class="rank" id="myRank">
-—
-</div>
-
-<div class="muted" id="rankGap">
-Բազայից հաշվարկվում է
-</div>
-
-<div class="bar">
 <div
-class="fill"
-id="levelFill"
-style="width:0%"
+  class="toast"
+  id="toast"
 ></div>
-</div>
-
-<b
-style="font-size:27px"
-id="myXP"
->
-0 XP
-</b>
-
-<span
-class="muted"
-id="myLevel"
->
-· Մակարդակ 1
-</span>
-
-</div>
-
-
-<div class="card">
-
-<div class="muted">
-🔥 ԸՆԹԱՑԻԿ ՇԱՐՔ
-</div>
-
-<div class="rank" id="streak">
-0
-<span style="font-size:20px">
-օր
-</span>
-</div>
-
-<div class="muted">
-Հաստատված կատարումները ավելացնում են XP։
-</div>
-
-<div class="stats">
-
-<div class="stat">
-<span class="muted">Այսօր</span>
-<b id="todayXP">
-0 XP
-</b>
-</div>
-
-<div class="stat">
-<span class="muted">Շաբաթ</span>
-<b id="weekXP">
-0 XP
-</b>
-</div>
-
-<div class="stat">
-<span class="muted">Հաշվետվություններ</span>
-<b id="mySubs">
-0
-</b>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<section class="section">
-
-<h2>
-⚡ Վարժություններ
-</h2>
-
-<div class="muted" style="margin:-5px 0 12px">
-Յուրաքանչյուր հաստատված կատարումից ստացվում է վարժության XP-ն։
-</div>
-
-<div
-class="ex"
-id="exerciseList"
->
-</div>
-
-</section>
-
-
-<section class="section card">
-
-<h2>
-🏆 Խմբի վարկանիշ
-</h2>
-
-<table>
-
-<tbody id="board">
-</tbody>
-
-</table>
-
-</section>
-
-</div>
-
-
-<div
-id="leader"
-class="hidden card"
->
-
-<h2>
-🏆 Ամբողջական վարկանիշ
-</h2>
-
-<p class="muted">
-Բոլոր գրանցված մասնակիցները՝ ըստ XP։
-</p>
-
-<table>
-
-<tbody id="board2">
-</tbody>
-
-</table>
-
-</div>
-
-
-<div
-id="submissions"
-class="hidden card"
->
-
-<h2>
-📹 Հաշվետվություններ
-</h2>
-
-<p
-class="muted"
-id="submissionHelp"
->
-</p>
-
-<div id="subList">
-</div>
-
-</div>
-
-
-<div
-id="people"
-class="hidden"
->
-
-<div class="card">
-
-<h2>
-👥 Մասնակիցներ
-</h2>
-
-<p class="muted">
-Բոլոր պրոֆիլները Supabase-ից։
-</p>
-
-<div
-class="people"
-id="peopleList"
->
-</div>
-
-</div>
-
-</div>
-
-
-<div
-id="admin"
-class="hidden"
->
-
-<div class="card">
-
-<h2>
-⚙️ Կառավարում
-</h2>
-
-<p class="muted">
-Միայն ադմին։ XP-ի փոփոխությունը պահպանվում է տվյալների բազայում։
-</p>
-
-<div id="adminUsers">
-</div>
-
-<hr style="border-color:var(--line);margin:20px 0">
-
-<h3>
-Գործողությունների պատմություն
-</h3>
-
-<div id="activityList">
-</div>
-
-</div>
-
-</div>
-
-
-<div
-id="profile"
-class="hidden card"
->
-
-<h2>
-👤 Իմ էջը
-</h2>
-
-<div class="person">
-
-<div
-class="avatar"
-id="bigAvatar"
->
-Գ
-</div>
-
-<div>
-
-<b id="profileName">
-Օգտատեր
-</b>
-
-<div
-class="muted"
-id="profileRole"
->
-</div>
-
-<div
-class="muted"
-id="profileEmail"
->
-</div>
-
-</div>
-
-</div>
-
-<hr
-style="border-color:var(--line);margin:20px 0"
->
-
-<div class="stats">
-
-<div class="stat">
-<span class="muted">
-XP
-</span>
-<b id="profileXP">
-0
-</b>
-</div>
-
-<div class="stat">
-<span class="muted">
-Level
-</span>
-<b id="profileLevel">
-1
-</b>
-</div>
-
-<div class="stat">
-<span class="muted">
-Դեր
-</span>
-<b id="profileRole2">
-student
-</b>
-</div>
-
-</div>
-
-</div>
-
-</main>
-
-</div>
-
-
-<div
-class="modal"
-id="submitModal"
->
-
-<div class="box">
-
-<h2 id="submitTitle">
-Արդյունքի ներկայացում
-</h2>
-
-<p class="muted">
-Գրիր կարճ մեկնաբանություն մարզչին։
-</p>
-
-<textarea
-id="submitComment"
-placeholder="Մեկնաբանություն"
-></textarea>
-
-<div
-style="display:flex;gap:8px;justify-content:flex-end"
->
-
-<button
-class="topbtn"
-onclick="closeSubmit()"
->
-Չեղարկել
-</button>
-
-<button
-class="btn"
-onclick="sendSubmission()"
->
-Ուղարկել մարզչին
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div
-class="toast"
-id="toast"
->
-</div>
 
 
 <script>
@@ -1068,1711 +1543,2589 @@ const SUPABASE_URL =
 "https://ohkxdcioxbssrnqaljxk.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable__EWGkXyiUCI5Zy9ptxIk6Q_dXAAD9tq";
+"sb_publishable__EWGkXyiUCI5Zy9ptxIk6Q_dXAADt9q";
 
 const db =
 supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
+  SUPABASE_URL,
+  SUPABASE_KEY
 );
 
 
 let session = null;
 let currentUser = null;
 let currentProfile = null;
-let currentTask = null;
 
-let exercises = [];
 let profiles = [];
-let submissions = [];
+let exercises = [];
+let notifications = [];
 
 let authMode = "login";
 
-
 const roleNames = {
-student:"Աշակերտ",
-trainer:"Մարզիչ",
-admin:"Ադմին"
+  student:"Աշակերտ",
+  trainer:"Մարզիչ",
+  admin:"Ադմին"
 };
 
 
 document.getElementById("dateText").textContent =
 new Intl.DateTimeFormat(
-"hy-AM",
-{
-weekday:"long",
-day:"numeric",
-month:"long"
-}
+  "hy-AM",
+  {
+    weekday:"long",
+    day:"numeric",
+    month:"long"
+  }
 ).format(new Date());
 
 
 function toast(text){
 
-const x =
-document.getElementById("toast");
+  const el =
+  document.getElementById("toast");
 
-x.textContent = text;
+  el.textContent = text;
 
-x.classList.add("show");
+  el.classList.add("show");
 
-clearTimeout(window.__toast);
+  clearTimeout(window.__toastTimer);
 
-window.__toast =
-setTimeout(
-()=>{
-x.classList.remove("show");
-},
-2800
-);
+  window.__toastTimer =
+  setTimeout(
+    ()=>{
+      el.classList.remove("show");
+    },
+    3000
+  );
 
 }
 
 
 function esc(value){
 
-return String(value ?? "")
-.replace(
-/[&<>"']/g,
-char => ({
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#039;"
-}[char])
-);
+  return String(value ?? "")
+    .replace(
+      /[&<>"']/g,
+      char=>({
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+      }[char])
+    );
 
 }
 
 
 function roleLabel(role){
 
-return roleNames[role] ||
-role ||
-"Аշակերտ";
+  return roleNames[role] || role || "Աշակերտ";
 
 }
 
 
-function isStaff(){
+function isTrainer(){
 
-return currentProfile &&
-["trainer","admin"]
-.includes(currentProfile.role);
+  return currentProfile?.role === "trainer";
 
 }
 
 
 function isAdmin(){
 
-return currentProfile &&
-currentProfile.role === "admin";
+  return currentProfile?.role === "admin";
+
+}
+
+
+function isStaff(){
+
+  return ["trainer","admin"].includes(
+    currentProfile?.role
+  );
+
+}
+
+
+function initialOf(name){
+
+  return (name || "Գ")
+    .trim()
+    .charAt(0)
+    .toUpperCase();
+
+}
+
+
+function avatarHTML(profile, size=""){
+
+  const initial =
+  esc(initialOf(profile?.full_name));
+
+  if(profile?.avatar_url){
+
+    return `
+      <div class="avatar ${size}">
+        <img
+          src="${esc(profile.avatar_url)}"
+          alt="avatar"
+        >
+      </div>
+    `;
+
+  }
+
+  return `
+    <div class="avatar ${size}">
+      ${initial}
+    </div>
+  `;
 
 }
 
 
 function toggleAuth(){
 
-authMode =
-authMode === "login"
-? "signup"
-: "login";
+  authMode =
+  authMode === "login"
+    ? "signup"
+    : "login";
 
-document
-.getElementById("authTitle")
-.textContent =
-authMode === "login"
-? "Մուտք"
-: "Գրանցում";
+  document
+    .getElementById("authTitle")
+    .textContent =
+    authMode === "login"
+      ? "Մուտք"
+      : "Գրանցում";
 
-document
-.getElementById("authText")
-.textContent =
-authMode === "login"
-? "Մուտք գործիր քո հաշիվ"
-: "Ստեղծիր նոր հաշիվ";
+  document
+    .getElementById("authText")
+    .textContent =
+    authMode === "login"
+      ? "Մուտք գործիր քո հաշիվ"
+      : "Ստեղծիր նոր հաշիվ";
 
-document
-.getElementById("authName")
-.classList
-.toggle(
-"hidden",
-authMode === "login"
-);
+  document
+    .getElementById("signupFields")
+    .classList
+    .toggle(
+      "hidden",
+      authMode === "login"
+    );
 
-document
-.getElementById("authSubmit")
-.textContent =
-authMode === "login"
-? "Մուտք գործել"
-: "Գրանցվել";
+  document
+    .getElementById("authSubmit")
+    .textContent =
+    authMode === "login"
+      ? "Մուտք գործել"
+      : "Գրանցվել";
 
-document
-.getElementById("authToggle")
-.textContent =
-authMode === "login"
-? "Նոր հաշիվ ստեղծել"
-: "Արդեն ունեմ հաշիվ";
+  document
+    .getElementById("authToggle")
+    .textContent =
+    authMode === "login"
+      ? "Նոր հաշիվ ստեղծել"
+      : "Արդեն ունեմ հաշիվ";
 
 }
 
 
 async function submitAuth(){
 
-const email =
-document
-.getElementById("authEmail")
-.value
-.trim();
+  const email =
+  document
+    .getElementById("authEmail")
+    .value
+    .trim();
 
-const password =
-document
-.getElementById("authPassword")
-.value;
+  const password =
+  document
+    .getElementById("authPassword")
+    .value;
 
-const name =
-document
-.getElementById("authName")
-.value
-.trim();
+  const name =
+  document
+    .getElementById("authName")
+    .value
+    .trim();
 
-if(
-!email ||
-!password ||
-(
-authMode === "signup" &&
-!name
-)
-){
+  const username =
+  document
+    .getElementById("authUsername")
+    .value
+    .trim()
+    .toLowerCase();
 
-toast("Լրացրու բոլոր դաշտերը");
+  if(
+    !email ||
+    !password ||
+    (
+      authMode === "signup" &&
+      (!name || !username)
+    )
+  ){
 
-return;
+    toast("Լրացրու բոլոր դաշտերը");
 
-}
-
-
-const btn =
-document.getElementById("authSubmit");
-
-btn.disabled = true;
-
-
-try{
-
-let result;
+    return;
+  }
 
 
-if(authMode === "signup"){
+  if(
+    authMode === "signup" &&
+    !/^[a-z0-9_.-]{3,30}$/i.test(username)
+  ){
 
-result =
-await db.auth.signUp({
-email,
-password,
-options:{
-data:{
-full_name:name
-}
-}
-});
+    toast(
+      "Username-ը պետք է լինի 3-30 նիշ՝ տառեր, թվեր, _, . կամ -"
+    );
 
-}else{
-
-result =
-await db.auth.signInWithPassword({
-email,
-password
-});
-
-}
+    return;
+  }
 
 
-if(result.error)
-throw result.error;
+  const btn =
+  document.getElementById("authSubmit");
+
+  btn.disabled = true;
+
+  try{
+
+    let result;
+
+    if(authMode === "signup"){
+
+      const existing =
+      await db
+        .from("profiles")
+        .select("id")
+        .eq("username",username)
+        .maybeSingle();
+
+      if(existing.data){
+
+        throw new Error(
+          "Այս username-ը արդեն օգտագործվում է։"
+        );
+
+      }
+
+      result =
+      await db.auth.signUp({
+        email,
+        password,
+        options:{
+          data:{
+            full_name:name,
+            username
+          }
+        }
+      });
+
+    }else{
+
+      result =
+      await db.auth.signInWithPassword({
+        email,
+        password
+      });
+
+    }
 
 
-if(
-authMode === "signup" &&
-!result.data.session
-){
-
-toast(
-"Գրանցումը կատարված է։ Ստուգիր email-ը։"
-);
-
-return;
-
-}
+    if(result.error)
+      throw result.error;
 
 
-toast("Մուտքը հաջողվեց");
+    if(
+      authMode === "signup" &&
+      !result.data.session
+    ){
+
+      toast(
+        "Գրանցումը կատարված է։ Ստուգիր email-ը, հետո մուտք գործիր։"
+      );
+
+      return;
+    }
 
 
-}catch(error){
+    toast(
+      authMode === "login"
+        ? "Մուտքը հաջողվեց"
+        : "Գրանցումը հաջողվեց"
+    );
 
-toast(
-error.message ||
-"Մուտքի սխալ"
-);
 
-}finally{
+  }catch(error){
 
-btn.disabled = false;
+    console.error(error);
 
-}
+    toast(
+      error.message ||
+      "Գործողությունը չհաջողվեց"
+    );
+
+  }finally{
+
+    btn.disabled = false;
+
+  }
 
 }
 
 
 async function logout(){
 
-await db.auth.signOut();
+  await db.auth.signOut();
 
-session = null;
-currentUser = null;
-currentProfile = null;
+  session = null;
+  currentUser = null;
+  currentProfile = null;
 
-document
-.getElementById("app")
-.classList
-.add("hidden");
+  document
+    .getElementById("app")
+    .classList
+    .add("hidden");
 
-document
-.getElementById("auth")
-.classList
-.remove("hidden");
+  document
+    .getElementById("setup")
+    .classList
+    .add("hidden");
+
+  document
+    .getElementById("auth")
+    .classList
+    .remove("hidden");
 
 }
 
 
 async function loadProfile(){
 
-const {
-data,
-error
-} =
-await db
-.from("profiles")
-.select(
-"id,full_name,role,xp,level,specialization,phone,email,created_at"
-)
-.eq("id",currentUser.id)
-.maybeSingle();
+  const {
+    data,
+    error
+  } =
+  await db
+    .from("profiles")
+    .select(
+      "id,full_name,role,xp,level,avatar_url,created_at,updated_at,username,email"
+    )
+    .eq(
+      "id",
+      currentUser.id
+    )
+    .maybeSingle();
 
 
-if(error)
-throw error;
+  if(error)
+    throw error;
 
 
-currentProfile = data;
+  currentProfile = data;
 
 
-if(!data){
+  if(!data){
 
-throw new Error(
-"Քո profile-ը չի գտնվել։"
-);
+    throw new Error(
+      "Քո profile-ը չի գտնվել։"
+    );
+
+  }
+
+
+  const needsSetup =
+    !data.full_name ||
+    !data.username ||
+    !data.avatar_url;
+
+
+  if(needsSetup){
+
+    openProfileSetup();
+
+    return false;
+  }
+
+
+  document
+    .getElementById("setup")
+    .classList
+    .add("hidden");
+
+  document
+    .getElementById("app")
+    .classList
+    .remove("hidden");
+
+
+  updateUserUI();
+
+  return true;
+
+}
+
+
+function updateUserUI(){
+
+  const p =
+  currentProfile;
+
+  document
+    .getElementById("roleName")
+    .textContent =
+    roleLabel(p.role);
+
+  document
+    .getElementById("sideName")
+    .textContent =
+    p.full_name;
+
+  document
+    .getElementById("sideUsername")
+    .textContent =
+    "@" + p.username;
+
+  document
+    .getElementById("welcomeName")
+    .textContent =
+    p.full_name;
+
+
+  document
+    .getElementById("profileName")
+    .textContent =
+    p.full_name;
+
+  document
+    .getElementById("profileUsername")
+    .textContent =
+    "@" + p.username;
+
+  document
+    .getElementById("profileRole")
+    .textContent =
+    roleLabel(p.role);
+
+  document
+    .getElementById("profileRole2")
+    .textContent =
+    p.role;
+
+  document
+    .getElementById("profileEmail")
+    .textContent =
+    currentUser.email ||
+    p.email ||
+    "";
+
+
+  document
+    .getElementById("profileXP")
+    .textContent =
+    Number(p.xp || 0).toLocaleString();
+
+  document
+    .getElementById("profileLevel")
+    .textContent =
+    p.level || 1;
+
+
+  const sideAvatar =
+  document.getElementById("sideAvatar");
+
+  const profileAvatar =
+  document.getElementById("profileAvatar");
+
+  if(p.avatar_url){
+
+    sideAvatar.innerHTML =
+    `<img src="${esc(p.avatar_url)}" alt="avatar">`;
+
+    profileAvatar.innerHTML =
+    `<img src="${esc(p.avatar_url)}" alt="avatar">`;
+
+  }else{
+
+    sideAvatar.textContent =
+    initialOf(p.full_name);
+
+    profileAvatar.textContent =
+    initialOf(p.full_name);
+
+  }
+
+
+  document
+    .getElementById("profileEditName")
+    .value =
+    p.full_name || "";
+
+  document
+    .getElementById("profileEditUsername")
+    .value =
+    p.username || "";
+
+
+  document
+    .getElementById("navTrainer")
+    .classList
+    .toggle(
+      "hidden",
+      !isTrainer()
+    );
+
+  document
+    .getElementById("navAdmin")
+    .classList
+    .toggle(
+      "hidden",
+      !isAdmin()
+    );
+
+}
+
+
+function openProfileSetup(){
+
+  document
+    .getElementById("auth")
+    .classList
+    .add("hidden");
+
+  document
+    .getElementById("app")
+    .classList
+    .add("hidden");
+
+  document
+    .getElementById("setup")
+    .classList
+    .remove("hidden");
+
+
+  document
+    .getElementById("setupName")
+    .value =
+    currentProfile?.full_name ||
+    currentUser?.user_metadata?.full_name ||
+    "";
+
+  document
+    .getElementById("setupUsername")
+    .value =
+    currentProfile?.username ||
+    currentUser?.user_metadata?.username ||
+    "";
+
+
+  const preview =
+  document.getElementById(
+    "setupAvatarPreview"
+  );
+
+  if(currentProfile?.avatar_url){
+
+    preview.innerHTML =
+    `<img src="${esc(currentProfile.avatar_url)}" alt="avatar">`;
+
+  }else{
+
+    preview.textContent =
+    initialOf(
+      currentProfile?.full_name ||
+      currentUser?.user_metadata?.full_name
+    );
+
+  }
+
+}
+
+
+async function uploadAvatar(file){
+
+  if(!file)
+    return null;
+
+
+  if(
+    ![
+      "image/jpeg",
+      "image/png",
+      "image/webp"
+    ].includes(file.type)
+  ){
+
+    throw new Error(
+      "Ավատարը պետք է լինի JPG, PNG կամ WEBP։"
+    );
+
+  }
+
+
+  if(file.size > 5 * 1024 * 1024){
+
+    throw new Error(
+      "Ավատարի չափը չպետք է գերազանցի 5MB։"
+    );
+
+  }
+
+
+  const ext =
+  file.name
+    .split(".")
+    .pop()
+    .toLowerCase();
+
+
+  const path =
+  `${currentUser.id}/${crypto.randomUUID()}.${ext}`;
+
+
+  const {
+    error
+  } =
+  await db.storage
+    .from("avatars")
+    .upload(
+      path,
+      file,
+      {
+        upsert:false,
+        contentType:file.type
+      }
+    );
+
+
+  if(error)
+    throw error;
+
+
+  const {
+    data
+  } =
+  db.storage
+    .from("avatars")
+    .getPublicUrl(path);
+
+
+  return data.publicUrl;
+
+}
+
+
+async function saveInitialProfile(){
+
+  const name =
+  document
+    .getElementById("setupName")
+    .value
+    .trim();
+
+  const username =
+  document
+    .getElementById("setupUsername")
+    .value
+    .trim()
+    .toLowerCase();
+
+  const file =
+  document
+    .getElementById("setupAvatar")
+    .files[0];
+
+
+  if(!name || !username){
+
+    toast("Լրացրու անունը և username-ը");
+
+    return;
+  }
+
+
+  if(!file){
+
+    toast("Ավատար ավելացնելը պարտադիր է");
+
+    return;
+  }
+
+
+  if(
+    !/^[a-z0-9_.-]{3,30}$/i.test(username)
+  ){
+
+    toast(
+      "Username-ը պետք է լինի 3-30 նիշ"
+    );
+
+    return;
+  }
+
+
+  const btn =
+  document.getElementById("setupSave");
+
+  btn.disabled = true;
+
+  try{
+
+    const existing =
+    await db
+      .from("profiles")
+      .select("id")
+      .eq("username",username)
+      .neq("id",currentUser.id)
+      .maybeSingle();
+
+
+    if(existing.data){
+
+      throw new Error(
+        "Այս username-ը արդեն օգտագործվում է։"
+      );
+
+    }
+
+
+    const avatarUrl =
+    await uploadAvatar(file);
+
+
+    const {
+      error
+    } =
+    await db
+      .from("profiles")
+      .update({
+        full_name:name,
+        username,
+        avatar_url:avatarUrl,
+        updated_at:new Date().toISOString()
+      })
+      .eq(
+        "id",
+        currentUser.id
+      );
+
+
+    if(error)
+      throw error;
+
+
+    await loadProfile();
+
+    toast(
+      "✅ Պրոֆիլը պատրաստ է"
+    );
+
+    await loadAll();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      error.message ||
+      "Չհաջողվեց պահպանել պրոֆիլը"
+    );
+
+  }finally{
+
+    btn.disabled = false;
+
+  }
+
+}
+
+
+async function saveProfile(){
+
+  const name =
+  document
+    .getElementById("profileEditName")
+    .value
+    .trim();
+
+  const username =
+  document
+    .getElementById("profileEditUsername")
+    .value
+    .trim()
+    .toLowerCase();
+
+  const file =
+  document
+    .getElementById("profileAvatarFile")
+    .files[0];
+
+
+  if(!name || !username){
+
+    toast("Անունը և username-ը պարտադիր են");
+
+    return;
+  }
+
+
+  if(
+    !/^[a-z0-9_.-]{3,30}$/i.test(username)
+  ){
+
+    toast("Սխալ username");
+
+    return;
+  }
+
+
+  const btn =
+  document.getElementById("profileSave");
+
+  btn.disabled = true;
+
+  try{
+
+    const existing =
+    await db
+      .from("profiles")
+      .select("id")
+      .eq("username",username)
+      .neq("id",currentUser.id)
+      .maybeSingle();
+
+
+    if(existing.data){
+
+      throw new Error(
+        "Այս username-ը արդեն օգտագործվում է։"
+      );
+
+    }
+
+
+    let avatarUrl =
+    currentProfile.avatar_url;
+
+
+    if(file){
+
+      avatarUrl =
+      await uploadAvatar(file);
+
+    }
+
+
+    const {
+      error
+    } =
+    await db
+      .from("profiles")
+      .update({
+        full_name:name,
+        username,
+        avatar_url:avatarUrl,
+        updated_at:new Date().toISOString()
+      })
+      .eq(
+        "id",
+        currentUser.id
+      );
+
+
+    if(error)
+      throw error;
+
+
+    await loadProfile();
+
+    toast("✅ Պրոֆիլը պահպանվեց");
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      error.message ||
+      "Չհաջողվեց պահպանել"
+    );
+
+  }finally{
+
+    btn.disabled = false;
+
+  }
 
 }
 
 
 document
-.getElementById("roleName")
-.textContent =
-roleLabel(data.role);
+  .getElementById("setupAvatar")
+  .addEventListener(
+    "change",
+    function(){
 
-document
-.getElementById("sideRole")
-.textContent =
-roleLabel(data.role);
+      const file =
+      this.files[0];
 
-document
-.getElementById("sideName")
-.textContent =
-data.full_name ||
-"Օգտատեր";
+      if(!file)
+        return;
 
-document
-.getElementById("profileName")
-.textContent =
-data.full_name ||
-"Օգտատեր";
+      const preview =
+      document.getElementById(
+        "setupAvatarPreview"
+      );
 
-document
-.getElementById("profileRole")
-.textContent =
-roleLabel(data.role);
+      const url =
+      URL.createObjectURL(file);
 
-document
-.getElementById("profileRole2")
-.textContent =
-data.role ||
-"student";
+      preview.innerHTML =
+      `<img src="${url}" alt="avatar preview">`;
 
-document
-.getElementById("profileEmail")
-.textContent =
-currentUser.email ||
-data.email ||
-"";
-
-document
-.getElementById("profileXP")
-.textContent =
-Number(data.xp || 0)
-.toLocaleString();
-
-document
-.getElementById("profileLevel")
-.textContent =
-data.level || 1;
-
-
-const initial =
-(data.full_name || "Գ")
-.trim()
-.charAt(0)
-.toUpperCase();
+    }
+  );
 
 
 document
-.getElementById("sideAvatar")
-.textContent =
-initial;
+  .getElementById("profileAvatarFile")
+  .addEventListener(
+    "change",
+    function(){
 
-document
-.getElementById("bigAvatar")
-.textContent =
-initial;
+      const file =
+      this.files[0];
 
+      if(!file)
+        return;
 
-document
-.getElementById("navAdmin")
-.classList
-.toggle(
-"hidden",
-!isAdmin()
-);
+      const preview =
+      document.getElementById(
+        "profileEditAvatarPreview"
+      );
 
+      const url =
+      URL.createObjectURL(file);
 
-document
-.getElementById("navSub")
-.classList
-.toggle(
-"hidden",
-!isStaff()
-);
+      preview.innerHTML =
+      `<img src="${url}" alt="avatar preview">`;
 
-}
+    }
+  );
 
 
 async function loadExercises(){
 
-const {
-data,
-error
-} =
-await db
-.from("exercises")
-.select(
-"id,name,description,xp,created_at"
-)
-.order(
-"created_at",
-{
-ascending:true
-}
-);
-
-
-if(error)
-throw error;
-
-
-exercises = data || [];
-
-
-const container =
-document.getElementById(
-"exerciseList"
-);
-
-
-if(!exercises.length){
-
-container.innerHTML =
-`
-<div class="card">
-Վարժություններ դեռ չկան։
-</div>
-`;
-
-return;
-
-}
-
-
-container.innerHTML =
-exercises
-.map(
-exercise =>
-`
-
-<div class="card exercise">
-
-<div>
-
-<div class="icon">
-💪
-</div>
-
-<b>
-${esc(exercise.name)}
-</b>
-
-<div class="muted">
-${esc(exercise.description || "")}
-</div>
-
-<span class="tag">
-+${Number(exercise.xp || 0)} XP
-</span>
-
-</div>
-
-<button
-class="btn"
-onclick="openSubmit('${esc(String(exercise.id))}')"
->
-📹 Ներկայացնել
-</button>
-
-</div>
-
-`
-)
-.join("");
-
-}
-
-
-function renderBoards(){
-
-const sorted =
-[...profiles]
-.sort(
-(a,b) =>
-Number(b.xp || 0) -
-Number(a.xp || 0)
-);
-
-
-const html =
-sorted
-.map(
-(profile,index) =>
-`
-
-<tr
-class="${
-profile.id === currentUser.id
-? "me"
-: ""
-}"
->
-
-<td>
-<b>
-${index + 1}
-</b>
-</td>
-
-<td>
-
-<b>
-${esc(profile.full_name || "Օգտատեր")}
-</b>
-
-<div class="muted">
-${esc(roleLabel(profile.role))}
-</div>
-
-</td>
-
-<td style="text-align:right">
-
-<b>
-${Number(profile.xp || 0).toLocaleString()}
-</b>
-
-XP
-
-</td>
-
-</tr>
-
-`
-)
-.join("");
-
-
-document
-.getElementById("board")
-.innerHTML =
-html ||
-`
-<tr>
-<td>
-Դեռ մասնակիցներ չկան։
-</td>
-</tr>
-`;
-
-
-document
-.getElementById("board2")
-.innerHTML =
-html ||
-`
-<tr>
-<td>
-Դեռ մասնակիցներ չկան։
-</td>
-</tr>
-`;
-
-
-const position =
-sorted.findIndex(
-profile =>
-profile.id === currentUser.id
-);
-
-
-const rank =
-position < 0
-? null
-: position + 1;
-
-
-document
-.getElementById("myRank")
-.textContent =
-rank
-? `#${rank}`
-: "—";
-
-
-const xp =
-Number(currentProfile.xp || 0);
-
-
-document
-.getElementById("myXP")
-.textContent =
-xp.toLocaleString() +
-" XP";
-
-
-document
-.getElementById("myLevel")
-.textContent =
-" · Մակարդակ " +
-(currentProfile.level || 1);
-
-
-document
-.getElementById("levelFill")
-.style
-.width =
-Math.min(
-100,
-Math.round(
-(xp % 150) /
-150 *
-100
-)
-) +
-"%";
-
-
-if(rank === 1){
-
-document
-.getElementById("rankGap")
-.textContent =
-"Դու առաջին տեղում ես։";
-
-}else if(rank > 1){
-
-const difference =
-Number(sorted[rank - 2].xp || 0) -
-xp;
-
-document
-.getElementById("rankGap")
-.textContent =
-`Հաջորդ մասնակցից՝ ${difference} XP`;
-
-}else{
-
-document
-.getElementById("rankGap")
-.textContent =
-"Վարկանիշը հաշվարկվում է։";
-
-}
+  const {
+    data,
+    error
+  } =
+  await db
+    .from("exercises")
+    .select(
+      "id,name,description,xp,created_at"
+    )
+    .order(
+      "created_at",
+      {
+        ascending:true
+      }
+    );
+
+
+  if(error)
+    throw error;
+
+
+  exercises =
+  data || [];
+
+
+  const container =
+  document.getElementById(
+    "exerciseList"
+  );
+
+
+  if(!exercises.length){
+
+    container.innerHTML =
+    `
+      <div class="card empty">
+        Վարժություններ դեռ չկան։
+      </div>
+    `;
+
+    return;
+  }
+
+
+  container.innerHTML =
+  exercises
+    .map(
+      exercise =>
+      `
+        <div class="card exercise">
+
+          <div>
+
+            <div class="icon">
+              💪
+            </div>
+
+            <b>
+              ${esc(exercise.name)}
+            </b>
+
+            <div
+              class="muted"
+              style="margin-top:6px"
+            >
+              ${esc(exercise.description || "")}
+            </div>
+
+            <span class="tag">
+              +${Number(exercise.xp || 0)} XP
+            </span>
+
+          </div>
+
+          <div class="muted">
+            Վարժությունը հասանելի է քեզ։
+          </div>
+
+        </div>
+      `
+    )
+    .join("");
 
 }
 
 
 async function loadProfiles(){
 
-const {
-data,
-error
-} =
-await db
-.from("profiles")
-.select(
-"id,full_name,role,xp,level,specialization,phone,email,created_at"
-)
-.order(
-"xp",
-{
-ascending:false
+  const {
+    data,
+    error
+  } =
+  await db
+    .from("profiles")
+    .select(
+      "id,full_name,role,xp,level,avatar_url,username,email,created_at"
+    )
+    .order(
+      "xp",
+      {
+        ascending:false
+      }
+    );
+
+
+  if(error)
+    throw error;
+
+
+  profiles =
+  data || [];
+
+
+  renderLeaderboard();
+  renderPeople();
+
+  if(isTrainer())
+    renderTrainer();
+
+  if(isAdmin())
+    renderAdmin();
+
 }
-);
 
 
-if(error)
-throw error;
+function renderLeaderboard(){
+
+  const sorted =
+  [...profiles]
+    .sort(
+      (a,b)=>
+        Number(b.xp || 0) -
+        Number(a.xp || 0)
+    );
 
 
-profiles =
-data || [];
+  const html =
+  sorted
+    .map(
+      (p,index)=>
+      `
+        <tr class="${
+          p.id === currentUser.id
+            ? "me"
+            : ""
+        }">
+
+          <td>
+            <b>
+              #${index + 1}
+            </b>
+          </td>
+
+          <td>
+
+            <div class="person">
+
+              ${avatarHTML(p)}
+
+              <div>
+
+                <b>
+                  ${esc(p.full_name || "Օգտատեր")}
+                </b>
+
+                <div class="muted">
+                  @${esc(p.username || "")}
+                  ·
+                  ${esc(roleLabel(p.role))}
+                </div>
+
+              </div>
+
+            </div>
+
+          </td>
+
+          <td style="text-align:right">
+            <b>
+              ${Number(p.xp || 0).toLocaleString()}
+            </b>
+            XP
+          </td>
+
+        </tr>
+      `
+    )
+    .join("");
 
 
-renderBoards();
-renderPeople();
-renderAdmin();
+  document
+    .getElementById("leaderboardBody")
+    .innerHTML =
+    html ||
+    `
+      <tr>
+        <td>
+          Դեռ մասնակիցներ չկան։
+        </td>
+      </tr>
+    `;
+
+
+  const index =
+  sorted.findIndex(
+    p =>
+      p.id === currentUser.id
+  );
+
+
+  const rank =
+  index >= 0
+    ? index + 1
+    : null;
+
+
+  document
+    .getElementById("myRank")
+    .textContent =
+    rank
+      ? `#${rank}`
+      : "—";
+
+
+  const xp =
+  Number(currentProfile.xp || 0);
+
+
+  document
+    .getElementById("myXP")
+    .textContent =
+    xp.toLocaleString() +
+    " XP";
+
+
+  document
+    .getElementById("myLevel")
+    .textContent =
+    " · Մակարդակ " +
+    (currentProfile.level || 1);
+
+
+  document
+    .getElementById("homeLevel")
+    .textContent =
+    currentProfile.level || 1;
+
+
+  document
+    .getElementById("levelFill")
+    .style
+    .width =
+    Math.min(
+      100,
+      Math.round(
+        (xp % 150) / 150 * 100
+      )
+    ) + "%";
+
+
+  if(rank === 1){
+
+    document
+      .getElementById("rankGap")
+      .textContent =
+      "Դու առաջին տեղում ես։";
+
+  }else if(rank > 1){
+
+    const difference =
+    Number(
+      sorted[rank - 2].xp || 0
+    ) - xp;
+
+    document
+      .getElementById("rankGap")
+      .textContent =
+      `Հաջորդ մասնակցից՝ ${difference} XP`;
+
+  }else{
+
+    document
+      .getElementById("rankGap")
+      .textContent =
+      "Վարկանիշը հաշվարկվում է։";
+
+  }
 
 }
 
 
 function renderPeople(){
 
-const container =
-document.getElementById(
-"peopleList"
-);
+  const container =
+  document.getElementById(
+    "peopleList"
+  );
 
 
-if(!profiles.length){
+  if(!profiles.length){
 
-container.innerHTML =
-`
-<div class="card">
-Մասնակիցներ դեռ չկան։
-</div>
-`;
+    container.innerHTML =
+    `
+      <div class="empty">
+        Մասնակիցներ դեռ չկան։
+      </div>
+    `;
 
-return;
+    return;
+  }
+
+
+  container.innerHTML =
+  profiles
+    .map(
+      p =>
+      `
+        <div class="card person">
+
+          ${avatarHTML(p)}
+
+          <div>
+
+            <b>
+              ${esc(p.full_name || "Օգտատեր")}
+            </b>
+
+            <div class="muted">
+              @${esc(p.username || "")}
+            </div>
+
+            <div class="muted">
+              ${esc(roleLabel(p.role))}
+              ·
+              ${Number(p.xp || 0).toLocaleString()}
+              XP
+            </div>
+
+          </div>
+
+        </div>
+      `
+    )
+    .join("");
 
 }
 
 
-container.innerHTML =
-profiles
-.map(
-profile =>
-`
+function renderTrainer(){
 
-<div class="card person">
+  if(!isTrainer())
+    return;
 
-<div class="avatar">
-${esc(
-(profile.full_name || "Օ")
-.trim()
-.charAt(0)
-.toUpperCase()
-)}
-</div>
 
-<div>
+  const students =
+  profiles.filter(
+    p =>
+      p.role === "student"
+  );
 
-<b>
-${esc(
-profile.full_name ||
-"Օգտատեր"
-)}
-</b>
 
-<div class="muted">
+  const container =
+  document.getElementById(
+    "trainerStudents"
+  );
 
-${esc(
-roleLabel(profile.role)
-)}
 
- ·
+  if(!students.length){
 
-${Number(
-profile.xp || 0
-).toLocaleString()}
+    container.innerHTML =
+    `
+      <div class="empty">
+        Աշակերտներ դեռ չկան։
+      </div>
+    `;
 
- XP
+  }else{
 
-</div>
+    container.innerHTML =
+    students
+      .map(
+        p =>
+        `
+          <div class="adminrow">
 
-</div>
+            <div class="person">
 
-</div>
+              ${avatarHTML(p)}
 
-`
-)
-.join("");
+              <div>
+
+                <b>
+                  ${esc(p.full_name)}
+                </b>
+
+                <div class="muted">
+                  @${esc(p.username || "")}
+                </div>
+
+              </div>
+
+            </div>
+
+            <div>
+              <b>
+                ${Number(p.xp || 0).toLocaleString()}
+              </b>
+              XP
+            </div>
+
+          </div>
+        `
+      )
+      .join("");
+
+  }
+
+
+  const select =
+  document.getElementById(
+    "trainerRecipient"
+  );
+
+
+  select.innerHTML =
+  `
+    <option value="">
+      Ընտրիր աշակերտին
+    </option>
+
+    <option value="all">
+      Բոլոր աշակերտները
+    </option>
+
+    ${
+      students
+        .map(
+          p =>
+          `
+            <option value="${p.id}">
+              ${esc(p.full_name)}
+              · @${esc(p.username || "")}
+            </option>
+          `
+        )
+        .join("")
+    }
+  `;
 
 }
 
 
 function renderAdmin(){
 
-if(!isAdmin())
-return;
+  if(!isAdmin())
+    return;
 
 
-document
-.getElementById("adminUsers")
-.innerHTML =
-profiles
-.map(
-profile =>
-`
-
-<div class="adminrow">
-
-<div>
-
-<b>
-${esc(
-profile.full_name ||
-"Օգտատեր"
-)}
-</b>
-
-<div class="muted">
-
-${esc(
-roleLabel(profile.role)
-)}
-
- ·
-
-${Number(
-profile.xp || 0
-).toLocaleString()}
-
- XP
-
- · Level
-
-${profile.level || 1}
-
-</div>
-
-</div>
-
-<div class="actions">
-
-<input
-id="xp_${profile.id}"
-type="number"
-value="100"
-min="1"
->
-
-<button
-class="btn"
-onclick="changeXP('${profile.id}',1)"
->
-+ Ավելացնել
-</button>
-
-<button
-class="btn reject"
-onclick="changeXP('${profile.id}',-1)"
->
-− Հանել
-</button>
-
-</div>
-
-</div>
-
-`
-)
-.join("");
-
-}
+  const container =
+  document.getElementById(
+    "adminUsers"
+  );
 
 
-async function loadSubmissions(){
+  container.innerHTML =
+  profiles
+    .map(
+      p =>
+      `
+        <div class="adminrow">
 
-if(!isStaff())
-return;
+          <div class="person">
+
+            ${avatarHTML(p)}
+
+            <div>
+
+              <b>
+                ${esc(p.full_name || "Օգտատեր")}
+              </b>
+
+              <div class="muted">
+                @${esc(p.username || "")}
+                ·
+                ${Number(p.xp || 0).toLocaleString()}
+                XP
+                · Level ${p.level || 1}
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="admincontrols">
+
+            <select
+              class="select"
+              style="width:130px"
+              onchange="changeRole('${p.id}',this.value)"
+            >
+
+              <option
+                value="student"
+                ${p.role === "student" ? "selected" : ""}
+              >
+                Աշակերտ
+              </option>
+
+              <option
+                value="trainer"
+                ${p.role === "trainer" ? "selected" : ""}
+              >
+                Մարզիչ
+              </option>
+
+              <option
+                value="admin"
+                ${p.role === "admin" ? "selected" : ""}
+              >
+                Ադմին
+              </option>
+
+            </select>
+
+            <input
+              id="xp_${p.id}"
+              type="number"
+              class="input smallinput"
+              value="100"
+              min="1"
+            >
+
+            <button
+              class="btn greenbtn"
+              onclick="changeXP('${p.id}',1)"
+            >
+              +XP
+            </button>
+
+            <button
+              class="btn redbtn"
+              onclick="changeXP('${p.id}',-1)"
+            >
+              -XP
+            </button>
+
+          </div>
+
+        </div>
+      `
+    )
+    .join("");
 
 
-const {
-data,
-error
-} =
-await db
-.from("submissions")
-.select(
-"id,user_id,exercise_id,exercise_name,comment,file_url,status,xp,created_at"
-)
-.order(
-"created_at",
-{
-ascending:false
-}
-);
+  const select =
+  document.getElementById(
+    "adminRecipient"
+  );
 
 
-if(error)
-throw error;
+  select.innerHTML =
+  `
+    <option value="">
+      Ընտրիր օգտատիրոջը
+    </option>
 
+    <option value="all">
+      Բոլոր օգտատերերը
+    </option>
 
-submissions =
-data || [];
-
-
-const pending =
-submissions.filter(
-submission =>
-submission.status === "pending"
-);
-
-
-document
-.getElementById("submissionHelp")
-.textContent =
-"Դիտիր, հաստատիր կամ մերժիր ներկայացված արդյունքները։";
-
-
-const container =
-document.getElementById(
-"subList"
-);
-
-
-if(!pending.length){
-
-container.innerHTML =
-`
-<div class="muted">
-Սպասող հաշվետվություններ չկան։
-</div>
-`;
-
-return;
+    ${
+      profiles
+        .map(
+          p =>
+          `
+            <option value="${p.id}">
+              ${esc(p.full_name)}
+              · ${esc(roleLabel(p.role))}
+            </option>
+          `
+        )
+        .join("")
+    }
+  `;
 
 }
 
 
-container.innerHTML =
-pending
-.map(
-submission => {
+async function changeRole(id,newRole){
 
-const profile =
-profiles.find(
-profile =>
-profile.id ===
-submission.user_id
-);
+  if(!isAdmin())
+    return;
 
 
-return `
+  const profile =
+  profiles.find(
+    p=>p.id === id
+  );
 
-<div class="submission">
 
-<div class="thumb">
-📹
-</div>
+  if(!profile)
+    return;
 
-<div>
 
-<b>
-${esc(
-profile?.full_name ||
-"Օգտատեր"
-)}
- ·
+  if(
+    id === currentUser.id &&
+    newRole !== "admin"
+  ){
 
-${esc(
-submission.exercise_name ||
-"Վարժություն"
-)}
+    const ok =
+    confirm(
+      "Դու փոխում ես քո սեփական ադմինի դերը։ Շարունակե՞լ։"
+    );
 
-</b>
+    if(!ok){
 
-<div class="muted">
+      await loadProfiles();
 
-+${Number(
-submission.xp || 0
-)}
+      return;
+    }
 
-XP ·
+  }
 
-${new Date(
-submission.created_at
-).toLocaleString()}
 
-</div>
+  try{
 
-${
-submission.comment
-?
-`
-<div style="margin-top:5px">
-${esc(submission.comment)}
-</div>
-`
-:
-""
-}
+    const {
+      error
+    } =
+    await db
+      .from("profiles")
+      .update({
+        role:newRole,
+        updated_at:new Date().toISOString()
+      })
+      .eq(
+        "id",
+        id
+      );
 
-</div>
 
-<div class="actions">
+    if(error)
+      throw error;
 
-<button
-class="btn accept"
-onclick="review('${submission.id}',true)"
->
-✓ Ընդունել
-</button>
 
-<button
-class="btn reject"
-onclick="review('${submission.id}',false)"
->
-✕ Մերժել
-</button>
+    toast(
+      "Դերը փոխվեց"
+    );
 
-</div>
 
-</div>
+    await loadAll();
 
-`;
+  }catch(error){
 
-}
-)
-.join("");
+    console.error(error);
+
+    toast(
+      error.message ||
+      "Չհաջողվեց փոխել դերը"
+    );
+
+    await loadProfiles();
+
+  }
 
 }
 
 
-function openSubmit(id){
+async function changeXP(id,sign){
 
-const exercise =
-exercises.find(
-item =>
-String(item.id) ===
-String(id)
-);
+  if(!isAdmin())
+    return;
 
 
-if(!exercise)
-return;
+  const input =
+  document.getElementById(
+    "xp_" + id
+  );
 
 
-currentTask =
-exercise;
+  const amount =
+  Math.abs(
+    parseInt(
+      input?.value,
+      10
+    ) || 0
+  );
 
 
-document
-.getElementById("submitTitle")
-.textContent =
-`${exercise.name} · +${Number(exercise.xp || 0)} XP`;
+  if(!amount){
+
+    toast(
+      "Գրիր XP-ի քանակը"
+    );
+
+    return;
+  }
 
 
-document
-.getElementById("submitComment")
-.value =
-"";
+  try{
+
+    const {
+      error
+    } =
+    await db.rpc(
+      "admin_change_xp",
+      {
+        p_user_id:id,
+        p_delta:sign * amount
+      }
+    );
 
 
-document
-.getElementById("submitModal")
-.classList
-.add("show");
-
-}
+    if(error)
+      throw error;
 
 
-function closeSubmit(){
-
-document
-.getElementById("submitModal")
-.classList
-.remove("show");
-
-}
+    toast(
+      (sign > 0 ? "➕ " : "➖ ") +
+      amount +
+      " XP · պահպանվեց"
+    );
 
 
-async function sendSubmission(){
+    await loadAll();
 
-if(!currentTask || !currentUser)
-return;
+  }catch(error){
 
+    console.error(error);
 
-try{
+    toast(
+      error.message ||
+      "Չհաջողվեց փոխել XP-ն"
+    );
 
-const {
-error
-} =
-await db
-.from("submissions")
-.insert({
-
-user_id:
-currentUser.id,
-
-exercise_id:
-currentTask.id,
-
-exercise_name:
-currentTask.name,
-
-comment:
-document
-.getElementById("submitComment")
-.value
-.trim(),
-
-status:
-"pending",
-
-xp:
-Number(
-currentTask.xp || 0
-)
-
-});
-
-
-if(error)
-throw error;
-
-
-closeSubmit();
-
-toast(
-"✓ Հաշվետվությունը ուղարկվեց մարզչին"
-);
-
-
-await loadAll();
-
-
-}catch(error){
-
-toast(
-error.message ||
-"Չհաջողվեց ուղարկել"
-);
-
-}
+  }
 
 }
 
 
-async function review(
-id,
-approve
+async function sendNotification(
+  recipient,
+  title,
+  message,
+  type="info"
 ){
 
-try{
-
-const {
-error
-} =
-await db.rpc(
-"review_submission",
-{
-p_submission_id:id,
-p_approve:approve
-}
-);
+  if(!recipient)
+    throw new Error(
+      "Ընտրիր ստացողին"
+    );
 
 
-if(error)
-throw error;
+  if(!title || !message)
+    throw new Error(
+      "Լրացրու վերնագիրը և հաղորդագրությունը"
+    );
 
 
-toast(
-approve
-?
-"✅ Արդյունքը հաստատվեց, XP-ն ավելացավ"
-:
-"❌ Արդյունքը մերժվեց"
-);
+  let targets = [];
 
 
-await loadAll();
+  if(recipient === "all"){
+
+    targets =
+    profiles.map(
+      p=>p.id
+    );
+
+  }else{
+
+    targets = [recipient];
+
+  }
 
 
-}catch(error){
-
-toast(
-error.message ||
-"Չհաջողվեց փոխել կարգավիճակը"
-);
-
-}
-
-}
+  if(!targets.length)
+    throw new Error(
+      "Ստացողներ չկան"
+    );
 
 
-async function changeXP(
-id,
-sign
-){
-
-const input =
-document.getElementById(
-"xp_" + id
-);
-
-
-const amount =
-Math.abs(
-parseInt(
-input?.value,
-10
-) || 0
-);
+  const rows =
+  targets.map(
+    userId => ({
+      user_id:userId,
+      type,
+      title,
+      message,
+      read_at:null
+    })
+  );
 
 
-if(!amount){
+  const {
+    error
+  } =
+  await db
+    .from("notifications")
+    .insert(rows);
 
-toast(
-"Գրիր XP-ի քանակը"
-);
 
-return;
+  if(error)
+    throw error;
 
 }
 
 
-try{
+async function sendTrainerNotification(){
 
-const {
-error
-} =
-await db.rpc(
-"admin_change_xp",
-{
-p_user_id:id,
-p_delta:
-sign * amount
-}
-);
+  if(!isTrainer())
+    return;
 
 
-if(error)
-throw error;
+  const recipient =
+  document
+    .getElementById(
+      "trainerRecipient"
+    )
+    .value;
 
 
-toast(
-(sign > 0 ? "➕ " : "➖ ") +
-amount +
-" XP · պահպանվեց"
-);
+  const title =
+  document
+    .getElementById(
+      "trainerNotificationTitle"
+    )
+    .value
+    .trim();
 
 
-await loadAll();
+  const message =
+  document
+    .getElementById(
+      "trainerNotificationMessage"
+    )
+    .value
+    .trim();
 
 
-}catch(error){
+  try{
 
-toast(
-error.message ||
-"Չհաջողվեց փոխել XP-ն"
-);
-
-}
-
-}
+    await sendNotification(
+      recipient,
+      title,
+      message,
+      "trainer"
+    );
 
 
-async function loadActivity(){
+    document
+      .getElementById(
+        "trainerNotificationTitle"
+      )
+      .value = "";
 
-if(!isAdmin())
-return;
-
-
-const {
-data,
-error
-} =
-await db
-.from("activity_log")
-.select(
-"id,actor_id,target_user_id,action,details,created_at"
-)
-.order(
-"created_at",
-{
-ascending:false
-}
-)
-.limit(30);
+    document
+      .getElementById(
+        "trainerNotificationMessage"
+      )
+      .value = "";
 
 
-if(error){
+    toast(
+      "🔔 Ծանուցումը ուղարկվեց"
+    );
 
-document
-.getElementById("activityList")
-.textContent =
-"Պատմությունը դեռ հասանելի չէ։";
+  }catch(error){
 
-return;
+    console.error(error);
+
+    toast(
+      error.message ||
+      "Չհաջողվեց ուղարկել"
+    );
+
+  }
 
 }
 
 
-if(!data?.length){
+async function sendAdminNotification(){
 
-document
-.getElementById("activityList")
-.textContent =
-"Պատմություն դեռ չկա։";
+  if(!isAdmin())
+    return;
 
-return;
+
+  const recipient =
+  document
+    .getElementById(
+      "adminRecipient"
+    )
+    .value;
+
+
+  const title =
+  document
+    .getElementById(
+      "adminNotificationTitle"
+    )
+    .value
+    .trim();
+
+
+  const message =
+  document
+    .getElementById(
+      "adminNotificationMessage"
+    )
+    .value
+    .trim();
+
+
+  try{
+
+    await sendNotification(
+      recipient,
+      title,
+      message,
+      "admin"
+    );
+
+
+    document
+      .getElementById(
+        "adminNotificationTitle"
+      )
+      .value = "";
+
+    document
+      .getElementById(
+        "adminNotificationMessage"
+      )
+      .value = "";
+
+
+    toast(
+      "🔔 Ծանուցումը ուղարկվեց"
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      error.message ||
+      "Չհաջողվեց ուղարկել"
+    );
+
+  }
 
 }
 
 
-document
-.getElementById("activityList")
-.innerHTML =
-data
-.map(
-activity =>
-`
+async function loadNotifications(){
 
-<div class="adminrow">
+  const {
+    data,
+    error
+  } =
+  await db
+    .from("notifications")
+    .select(
+      "id,user_id,type,title,message,read_at,created_at"
+    )
+    .eq(
+      "user_id",
+      currentUser.id
+    )
+    .order(
+      "created_at",
+      {
+        ascending:false
+      }
+    )
+    .limit(100);
 
-<div>
 
-<b>
-${esc(activity.action)}
-</b>
+  if(error)
+    throw error;
 
-<div class="muted">
 
-${new Date(
-activity.created_at
-).toLocaleString()}
+  notifications =
+  data || [];
 
-</div>
 
-</div>
+  renderNotifications();
 
-<div>
-${esc(
-JSON.stringify(
-activity.details || {}
-)
-)}
-</div>
+}
 
-</div>
 
-`
-)
-.join("");
+function renderNotifications(){
+
+  const unread =
+  notifications.filter(
+    n=>!n.read_at
+  ).length;
+
+
+  const badge =
+  document.getElementById(
+    "navBadge"
+  );
+
+
+  badge.textContent =
+  unread > 99
+    ? "99+"
+    : unread;
+
+
+  badge.classList.toggle(
+    "hidden",
+    unread === 0
+  );
+
+
+  const container =
+  document.getElementById(
+    "notificationList"
+  );
+
+
+  if(!notifications.length){
+
+    container.innerHTML =
+    `
+      <div class="empty">
+        Ծանուցումներ դեռ չկան։
+      </div>
+    `;
+
+    return;
+  }
+
+
+  container.innerHTML =
+  notifications
+    .map(
+      n =>
+      `
+        <div
+          class="notification ${
+            n.read_at
+              ? ""
+              : "unread"
+          }"
+        >
+
+          <div class="notificationhead">
+
+            <div>
+
+              <b>
+                ${esc(n.title)}
+              </b>
+
+              ${
+                !n.read_at
+                  ? `
+                    <span
+                      class="badge"
+                      style="margin-left:7px"
+                    >
+                      Նոր
+                    </span>
+                  `
+                  : ""
+              }
+
+            </div>
+
+            <div class="notificationtime">
+              ${new Date(
+                n.created_at
+              ).toLocaleString()}
+            </div>
+
+          </div>
+
+          <div style="margin-top:7px">
+            ${esc(n.message)}
+          </div>
+
+          ${
+            !n.read_at
+              ? `
+                <div style="margin-top:10px">
+
+                  <button
+                    class="topbtn"
+                    onclick="markNotificationRead('${n.id}')"
+                  >
+                    ✓ Կարդացել եմ
+                  </button>
+
+                </div>
+              `
+              : ""
+          }
+
+        </div>
+      `
+    )
+    .join("");
+
+}
+
+
+async function markNotificationRead(id){
+
+  try{
+
+    const {
+      error
+    } =
+    await db
+      .from("notifications")
+      .update({
+        read_at:new Date().toISOString()
+      })
+      .eq(
+        "id",
+        id
+      )
+      .eq(
+        "user_id",
+        currentUser.id
+      );
+
+
+    if(error)
+      throw error;
+
+
+    await loadNotifications();
+
+  }catch(error){
+
+    toast(
+      error.message ||
+      "Չհաջողվեց"
+    );
+
+  }
+
+}
+
+
+async function markAllNotificationsRead(){
+
+  try{
+
+    const {
+      error
+    } =
+    await db
+      .from("notifications")
+      .update({
+        read_at:new Date().toISOString()
+      })
+      .eq(
+        "user_id",
+        currentUser.id
+      )
+      .is(
+        "read_at",
+        null
+      );
+
+
+    if(error)
+      throw error;
+
+
+    await loadNotifications();
+
+    toast(
+      "✓ Բոլորը նշվեցին որպես կարդացված"
+    );
+
+  }catch(error){
+
+    toast(
+      error.message ||
+      "Չհաջողվեց"
+    );
+
+  }
 
 }
 
 
 async function loadStats(){
 
-const since =
-new Date();
+  const since =
+  new Date();
 
-since.setDate(
-since.getDate() - 7
-);
-
-
-const {
-data
-} =
-await db
-.from("submissions")
-.select(
-"xp,created_at,status,user_id"
-)
-.eq(
-"user_id",
-currentUser.id
-)
-.eq(
-"status",
-"approved"
-)
-.gte(
-"created_at",
-since.toISOString()
-);
+  since.setDate(
+    since.getDate() - 7
+  );
 
 
-const rows =
-data || [];
+  const {
+    data,
+    error
+  } =
+  await db
+    .from("activity_log")
+    .select("details,created_at")
+    .eq(
+      "target_user_id",
+      currentUser.id
+    )
+    .gte(
+      "created_at",
+      since.toISOString()
+    );
 
 
-const today =
-new Date();
+  if(error){
 
-today.setHours(
-0,
-0,
-0,
-0
-);
+    document
+      .getElementById("todayXP")
+      .textContent =
+      "—";
 
+    document
+      .getElementById("weekXP")
+      .textContent =
+      "—";
 
-const todayXP =
-rows
-.filter(
-item =>
-new Date(
-item.created_at
-) >= today
-)
-.reduce(
-(sum,item) =>
-sum +
-Number(item.xp || 0),
-0
-);
+    return;
+
+  }
 
 
-const weekXP =
-rows.reduce(
-(sum,item) =>
-sum +
-Number(item.xp || 0),
-0
-);
+  const rows =
+  data || [];
 
 
-document
-.getElementById("todayXP")
-.textContent =
-todayXP + " XP";
+  let weekXP = 0;
+  let todayXP = 0;
 
 
-document
-.getElementById("weekXP")
-.textContent =
-weekXP + " XP";
+  const today =
+  new Date();
+
+  today.setHours(
+    0,
+    0,
+    0,
+    0
+  );
 
 
-const {
-count
-} =
-await db
-.from("submissions")
-.select(
-"id",
-{
-count:"exact",
-head:true
-}
-)
-.eq(
-"user_id",
-currentUser.id
-);
+  rows.forEach(row=>{
+
+    const xp =
+    Number(
+      row.details?.xp ||
+      row.details?.amount ||
+      0
+    );
 
 
-document
-.getElementById("mySubs")
-.textContent =
-count || 0;
+    if(
+      !Number.isFinite(xp)
+    )
+      return;
 
 
-const {
-data:approved
-} =
-await db
-.from("submissions")
-.select("created_at")
-.eq(
-"user_id",
-currentUser.id
-)
-.eq(
-"status",
-"approved"
-)
-.order(
-"created_at",
-{
-ascending:false
-}
-)
-.limit(365);
+    weekXP += xp;
 
 
-const days =
-new Set(
-(approved || [])
-.map(
-item => {
+    if(
+      new Date(row.created_at) >= today
+    )
+      todayXP += xp;
 
-const date =
-new Date(
-item.created_at
-);
-
-return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
-
-}
-)
-);
+  });
 
 
-let streak = 0;
-
-let cursor =
-new Date();
-
-cursor.setHours(
-0,
-0,
-0,
-0
-);
+  document
+    .getElementById("todayXP")
+    .textContent =
+    todayXP + " XP";
 
 
-while(true){
-
-const key =
-`${cursor.getFullYear()}-${cursor.getMonth()+1}-${cursor.getDate()}`;
-
-
-if(!days.has(key))
-break;
-
-
-streak++;
-
-cursor.setDate(
-cursor.getDate() - 1
-);
+  document
+    .getElementById("weekXP")
+    .textContent =
+    weekXP + " XP";
 
 }
 
 
-document
-.getElementById("streak")
-.innerHTML =
-streak +
-' <span style="font-size:20px">օր</span>';
+async function loadActivity(){
+
+  if(!isAdmin())
+    return;
+
+
+  const {
+    data,
+    error
+  } =
+  await db
+    .from("activity_log")
+    .select(
+      "id,actor_id,target_user_id,action,details,created_at"
+    )
+    .order(
+      "created_at",
+      {
+        ascending:false
+      }
+    )
+    .limit(30);
+
+
+  const container =
+  document.getElementById(
+    "activityList"
+  );
+
+
+  if(error){
+
+    container.innerHTML =
+    `
+      <div class="muted">
+        Գործողությունների պատմությունը հասանելի չէ։
+      </div>
+    `;
+
+    return;
+  }
+
+
+  if(!data?.length){
+
+    container.innerHTML =
+    `
+      <div class="muted">
+        Պատմություն դեռ չկա։
+      </div>
+    `;
+
+    return;
+  }
+
+
+  container.innerHTML =
+  data
+    .map(
+      row =>
+      `
+        <div class="notification">
+
+          <b>
+            ${esc(row.action)}
+          </b>
+
+          <div class="muted">
+            ${new Date(
+              row.created_at
+            ).toLocaleString()}
+          </div>
+
+        </div>
+      `
+    )
+    .join("");
 
 }
 
 
 async function loadAll(){
 
-if(!currentUser)
-return;
+  if(!currentUser)
+    return;
 
 
-try{
+  try{
 
-await loadProfile();
-
-await loadExercises();
-
-await loadProfiles();
-
-await loadStats();
-
-if(isStaff())
-await loadSubmissions();
-
-if(isAdmin())
-await loadActivity();
+    const ready =
+    await loadProfile();
 
 
-}catch(error){
-
-console.error(error);
-
-toast(
-error.message ||
-"Չհաջողվեց բեռնել տվյալները"
-);
-
-}
-
-}
+    if(!ready)
+      return;
 
 
-function show(id){
+    await Promise.all([
+      loadExercises(),
+      loadProfiles(),
+      loadNotifications(),
+      loadStats()
+    ]);
 
-[
-"student",
-"leader",
-"submissions",
-"people",
-"admin",
-"profile"
-]
-.forEach(
-item => {
 
-document
-.getElementById(item)
-.classList
-.toggle(
-"hidden",
-item !== id
-);
+    if(isAdmin())
+      await loadActivity();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      error.message ||
+      "Չհաջողվեց բեռնել տվյալները"
+    );
+
+  }
 
 }
-);
 
 
-document
-.querySelectorAll(
-".nav button[data-page]"
-)
-.forEach(
-button => {
+function showPage(id){
 
-button.classList.toggle(
-"active",
-button.dataset.page === id
-);
-
-}
-);
+  const pages = [
+    "home",
+    "leaderboard",
+    "exercises",
+    "people",
+    "trainer",
+    "admin",
+    "notifications",
+    "profile"
+  ];
 
 
-document
-.getElementById("pageTitle")
-.textContent =
-{
-student:"Քո մրցահարթակը 🔥",
-leader:"🏆 Վարկանիշ",
-submissions:"📹 Հաշվետվություններ",
-people:"👥 Մասնակիցներ",
-admin:"⚙️ Կառավարում",
-profile:"👤 Իմ էջը"
-}[id];
+  pages.forEach(
+    page=>{
+
+      const el =
+      document.getElementById(
+        "page-" + page
+      );
+
+      if(!el)
+        return;
 
 
-if(id === "submissions")
-loadSubmissions();
+      el.classList.toggle(
+        "hidden",
+        page !== id
+      );
+
+    }
+  );
 
 
-if(id === "admin")
-loadActivity();
+  document
+    .querySelectorAll(
+      ".nav button[data-page]"
+    )
+    .forEach(
+      button=>{
+
+        button.classList.toggle(
+          "active",
+          button.dataset.page === id
+        );
+
+      }
+    );
+
+
+  const titles = {
+    home:"Քո մրցահարթակը 🔥",
+    leaderboard:"🏆 Վարկանիշ",
+    exercises:"💪 Վարժություններ",
+    people:"👥 Մասնակիցներ",
+    trainer:"🏋️ Մարզիչ",
+    admin:"⚙️ Կառավարում",
+    notifications:"🔔 Ծանուցումներ",
+    profile:"👤 Իմ էջը"
+  };
+
+
+  document
+    .getElementById("pageTitle")
+    .textContent =
+    titles[id] || "Forge";
+
+
+  if(id === "notifications")
+    loadNotifications();
+
+  if(id === "trainer" && isTrainer())
+    renderTrainer();
+
+  if(id === "admin" && isAdmin()){
+
+    renderAdmin();
+    loadActivity();
+
+  }
 
 }
 
 
 db.auth.onAuthStateChange(
-async (_event,newSession)=>{
+  async (_event,newSession)=>{
 
-session =
-newSession;
+    session =
+    newSession;
 
-currentUser =
-newSession?.user || null;
-
-
-if(!newSession){
-
-document
-.getElementById("app")
-.classList
-.add("hidden");
-
-document
-.getElementById("auth")
-.classList
-.remove("hidden");
-
-return;
-
-}
+    currentUser =
+    newSession?.user || null;
 
 
-document
-.getElementById("auth")
-.classList
-.add("hidden");
+    if(!newSession){
+
+      document
+        .getElementById("app")
+        .classList
+        .add("hidden");
+
+      document
+        .getElementById("setup")
+        .classList
+        .add("hidden");
+
+      document
+        .getElementById("auth")
+        .classList
+        .remove("hidden");
+
+      return;
+    }
 
 
-document
-.getElementById("app")
-.classList
-.remove("hidden");
+    document
+      .getElementById("auth")
+      .classList
+      .add("hidden");
 
 
-setTimeout(
-() => loadAll(),
-0
-);
+    setTimeout(
+      ()=>loadAll(),
+      0
+    );
 
-}
+  }
 );
 
 
 (async()=>{
 
-const {
-data
-} =
-await db.auth.getSession();
+  try{
+
+    const {
+      data
+    } =
+    await db.auth.getSession();
 
 
-if(data.session){
+    if(data.session){
 
-session =
-data.session;
+      session =
+      data.session;
 
-currentUser =
-data.session.user;
+      currentUser =
+      data.session.user;
 
+      await loadAll();
 
-document
-.getElementById("auth")
-.classList
-.add("hidden");
+    }
 
+  }catch(error){
 
-document
-.getElementById("app")
-.classList
-.remove("hidden");
+    console.error(error);
 
+    toast(
+      error.message ||
+      "Չհաջողվեց բացել սեսիան"
+    );
 
-await loadAll();
-
-}
+  }
 
 })();
+
+
+setInterval(
+  async()=>{
+
+    if(currentUser){
+
+      try{
+
+        await loadNotifications();
+
+      }catch(error){
+
+        console.error(error);
+
+      }
+
+    }
+
+  },
+  20000
+);
 
 </script>
 
