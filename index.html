@@ -1714,6 +1714,13 @@ function toggleAuth(){
       "hidden",
       authMode === "login"
     );
+  document
+.getElementById("authUsername")
+.classList
+.toggle(
+"hidden",
+authMode === "login"
+);
 
   document
     .getElementById("authSubmit")
@@ -1733,6 +1740,89 @@ function toggleAuth(){
 
 
 async function submitAuth(){
+
+  const email =
+    document.getElementById("authEmail").value.trim();
+
+  const password =
+    document.getElementById("authPassword").value;
+
+  const name =
+    document.getElementById("authName").value.trim();
+
+  const username =
+    document.getElementById("authUsername").value.trim()
+      .toLowerCase();
+
+  if(
+    !email ||
+    !password ||
+    !name ||
+    !username
+  ){
+    toast("Լրացրու բոլոր դաշտերը");
+    return;
+  }
+
+  if(username.length < 3){
+    toast("Username-ը պետք է լինի առնվազն 3 նիշ");
+    return;
+  }
+
+  if(!/^[a-z0-9_.-]+$/.test(username)){
+    toast("Username-ը կարող է պարունակել միայն a-z, 0-9, _, . և -");
+    return;
+  }
+
+  const btn =
+    document.getElementById("authSubmit");
+
+  btn.disabled = true;
+
+  try{
+
+    const result =
+      await db.auth.signUp({
+        email,
+        password,
+        options:{
+          data:{
+            full_name:name,
+            username:username
+          }
+        }
+      });
+
+    if(result.error)
+      throw result.error;
+
+    if(!result.data.session){
+
+      toast(
+        "Գրանցումը կատարված է։ Ստուգիր email-ը։"
+      );
+
+      return;
+    }
+
+    toast("Գրանցումը հաջողվեց");
+
+  }catch(error){
+
+    console.error(error);
+
+    toast(
+      error.message ||
+      "Գրանցման սխալ"
+    );
+
+  }finally{
+
+    btn.disabled = false;
+
+  }
+
+}
 
   const email =
   document
